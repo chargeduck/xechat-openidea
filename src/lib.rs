@@ -155,6 +155,8 @@ impl Moyu {
             Ok(ws) => {
                 self.ws = Some(ws);
                 self.send(json!({ "id": id, "ok": true }));
+                // 订阅生效前可能已经有帧堆在宿主队列里，这里立刻排空一次
+                self.pump();
             }
             Err(e) => self.reply_error(id, &e.to_string()),
         }

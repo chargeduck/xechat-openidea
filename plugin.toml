@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "XEChat Moyu"
-version = "0.1.4"
+version = "0.1.5"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.1.4 — 修复握手成功后没有派发 onopen 导致前端 10 秒超时的问题。"
+change-notes = "0.1.5 — 连接建立后立刻排空宿主队列；页面右下角新增桥接诊断条（收发帧计数）。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"

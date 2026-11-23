@@ -15,6 +15,27 @@
   }
 
   var seq = 1
+  // ---- 诊断条：把桥接层的关键事件直接画在页面上，方便不开控制台也能定位 ----
+  var diag = { open: 0, sent: 0, recv: 0, err: '', last: '' }
+  function diagRender() {
+    try {
+      var el = document.getElementById('__xechat_diag')
+      if (!el) {
+        el = document.createElement('div')
+        el.id = '__xechat_diag'
+        el.style.cssText = 'position:fixed;right:6px;bottom:6px;z-index:2147483647;font:11px/1.5 Consolas,monospace;' +
+          'background:rgba(0,0,0,.72);color:#8ef;padding:4px 8px;border-radius:6px;pointer-events:none;' +
+          'max-width:60vw;white-space:pre-wrap;opacity:.85'
+        document.body.appendChild(el)
+      }
+      el.textContent = 'bridge 0.1.5  open=' + diag.open + ' sent=' + diag.sent + ' recv=' + diag.recv +
+        (diag.err ? '\nerr=' + diag.err : '') + (diag.last ? '\nlast=' + diag.last : '')
+    } catch (e) {}
+  }
+  function diagSet(err) {
+    if (err) diag.err = String(err).slice(0, 120)
+    diagRender()
+  }
   var pending = new Map()
   var wsListeners = { open: [], message: [], close: [], error: [] }
   var ws = null
@@ -287,10 +308,14 @@
       }
     })
     wsListeners.message.push(function (msg) {
+      diag.recv++
+      diag.last = 'recv ' + String(msg.data || '').slice(0, 60)
+      diagRender()
       if (self.onmessage) self.onmessage({ type: 'message', data: msg.data })
     })
     wsListeners.close.push(function () {
       self.readyState = 3
+      diagSet('closed')
       if (self.onclose) self.onclose({ type: 'close', wasClean: true })
     })
     wsListeners.error.push(function (msg) {
@@ -303,10 +328,13 @@
         // 握手成功：宿主不再额外发事件，这里直接把 open 派发出去，
         // 否则前端永远等不到 onopen（表现为「10s 内未完成握手」超时）。
         self.readyState = 1
+        diag.open = 1
+        diagRender()
         wsListeners.open.forEach(function (fn) { try { fn({}) } catch (e) {} })
       })
       .catch(function (e) {
         self.readyState = 3
+        diagSet('connect failed: ' + e.message)
         if (self.onerror) self.onerror({ type: 'error', message: e.message })
         if (self.onclose) self.onclose({ type: 'close', wasClean: false })
       })
@@ -318,7 +346,11 @@
 
   ShimWebSocket.prototype.send = function (data) {
     if (this.readyState === 1) {
+      diag.sent++
+      diag.last = 'send ' + String(data).slice(0, 60)
+      diagRender()
       call({ op: 'ws.send', data: String(data) }).catch(function (e) {
+        diagSet('send failed: ' + e.message)
         if (this.onerror) this.onerror({ type: 'error', message: e.message })
       })
     } else if (this.readyState === 0) {
@@ -337,5 +369,5 @@
 
   window.WebSocket = ShimWebSocket
 
-  console.log('[xechat-openidea] bridge 0.1.4 ready (relay: ' + RELAY_ORIGIN + RELAY_BASE + ')')
+  console.log('[xechat-openidea] bridge 0.1.5 ready (relay: ' + RELAY_ORIGIN + RELAY_BASE + ')')
 })()
