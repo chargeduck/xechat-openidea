@@ -6,3 +6,4 @@ web-build/
 
 # 打包产物
 *.oiplugin
+*.zip
