@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "XEChat Moyu"
 version = "0.1.0"
-description = "摸鱼聊天室：在 IDE 里连 xechat 鱼塘，收发消息、看在线的同事、进游戏大厅。"
+description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.1.0 — 首个版本：侧边栏摸鱼聊天室（网页视图），WebSocket 与 HTTP 全部走插件桥接。"
+change-notes = "0.1.0 — First release: side-panel Moyu chat as a web view; WebSocket and HTTP requests are proxied through the plugin."
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
@@ -18,14 +18,14 @@ optional = ["net:dld.lesscoding.net", "net:*.lesscoding.net", "net:ask", "clipbo
 
 [[contributes.views]]
 id = "chat"
-title = "摸鱼"
+title = "Moyu"
 icon = "icons/xechat.svg"
 location = "right"
 web = "web/index.html"
 
 [[contributes.commands]]
 id = "open"
-title = "XEChat: 打开摸鱼聊天室"
+title = "XEChat: Open Moyu Chat"
 category = "XEChat"
 icon = "icons/xechat.svg"
 
