@@ -298,11 +298,18 @@
       if (self.onerror) self.onerror({ type: 'error', message: msg.error })
     })
 
-    call({ op: 'ws.connect', url: routeWs(url), headers: {} }).catch(function (e) {
-      self.readyState = 3
-      if (self.onerror) self.onerror({ type: 'error', message: e.message })
-      if (self.onclose) self.onclose({ type: 'close', wasClean: false })
-    })
+    call({ op: 'ws.connect', url: routeWs(url), headers: {} })
+      .then(function () {
+        // 握手成功：宿主不再额外发事件，这里直接把 open 派发出去，
+        // 否则前端永远等不到 onopen（表现为「10s 内未完成握手」超时）。
+        self.readyState = 1
+        wsListeners.open.forEach(function (fn) { try { fn({}) } catch (e) {} })
+      })
+      .catch(function (e) {
+        self.readyState = 3
+        if (self.onerror) self.onerror({ type: 'error', message: e.message })
+        if (self.onclose) self.onclose({ type: 'close', wasClean: false })
+      })
   }
   ShimWebSocket.CONNECTING = 0
   ShimWebSocket.OPEN = 1
@@ -330,5 +337,5 @@
 
   window.WebSocket = ShimWebSocket
 
-  console.log('[xechat-openidea] bridge 0.1.2 ready (relay: ' + RELAY_ORIGIN + RELAY_BASE + ')')
+  console.log('[xechat-openidea] bridge 0.1.4 ready (relay: ' + RELAY_ORIGIN + RELAY_BASE + ')')
 })()
