@@ -5,10 +5,13 @@
 //!
 //! - 网页 → 插件：`{"id":1,"op":"http"|"ws.connect"|"ws.send"|"ws.close", ...}`
 //! - 插件 → 网页：`{"id":1,"ok":true|false, ...}` 作为应答；
-//!   `{"event":"ws.open"|"ws.message"|"ws.close"|"ws.error", ...}` 作为推送。
+//!   `{"event":"ws.message"|"ws.close"|"ws.error", ...}` 作为推送。
 //!
 //! WebSocket 用 API 1.6 的宿主托管 WSS（`host::WebSocket`）：收到帧时 IDE 发
 //! `websocket-ready` 事件唤醒插件，插件 `drain` 后转发给网页。
+//!
+//! **连接句柄放在进程级静态里**：网页视图的 `Views::handle` 可能每次都跑在新实例上，
+//! 句柄放在 `self` 会导致「连接建立成功、下一次 send 却说未连接」（实例一换，旧句柄被 Drop）。
 
 use base64::engine::general_purpose::STANDARD as B64;
 use base64::Engine as _;
@@ -18,53 +21,58 @@ use openidea_plugin::{
     register_plugin, Context, Error, Event, EventKind, HttpRequest, Invocation, Plugin,
 };
 use serde_json::{json, Value};
+use std::sync::Mutex;
 
 /// 网页视图的 id，与 plugin.toml 中 `[[contributes.views]] id` 一致
 const VIEW: &str = "chat";
-/// 每次 drain 最多取多少帧，避免一帧处理太久
+/// 每次 drain 最多取多少帧
 const DRAIN_LIMIT: u32 = 64;
 
-#[derive(Default)]
-pub struct Moyu {
-    ws: Option<WebSocket>,
+/// 进程级连接句柄（见模块注释）
+static WS: Mutex<Option<WebSocket>> = Mutex::new(None);
+
+fn lock() -> std::sync::MutexGuard<'static, Option<WebSocket>> {
+    WS.lock().unwrap_or_else(|e| e.into_inner())
 }
 
-impl Moyu {
-    fn send(&self, value: Value) {
-        let _ = host::post_view_message(VIEW, &value.to_string());
-    }
+/// 推一条消息给网页视图
+fn post(value: Value) {
+    let _ = host::post_view_message(VIEW, &value.to_string());
+}
 
-    fn reply_error(&self, id: &Value, message: &str) {
-        self.send(json!({ "id": id, "ok": false, "error": message }));
-    }
-
-    /// 把宿主托管的 WSS 里积压的帧转发给网页
-    fn pump(&mut self) {
-        let Some(ws) = self.ws.as_ref() else { return };
-
-        let batch = match ws.drain(DRAIN_LIMIT) {
+/// 排空宿主队列并转发给网页（不依赖插件实例）
+fn pump() {
+    let batch = {
+        let guard = lock();
+        let Some(ws) = guard.as_ref() else { return };
+        match ws.drain(DRAIN_LIMIT) {
             Ok(batch) => batch,
             Err(e) => {
-                self.send(json!({ "event": "ws.error", "error": e.to_string() }));
-                self.ws = None;
+                drop(guard);
+                post(json!({ "event": "ws.error", "error": e.to_string() }));
+                *lock() = None;
                 return;
             }
-        };
-
-        let frames: Vec<String> = batch
-            .messages
-            .into_iter()
-            .map(|m| String::from_utf8_lossy(&m).into_owned())
-            .collect();
-
-        for text in frames {
-            self.send(json!({ "event": "ws.message", "data": text }));
         }
+    };
 
-        if batch.closed {
-            self.ws = None;
-            self.send(json!({ "event": "ws.close" }));
-        }
+    for bytes in batch.messages {
+        let text = String::from_utf8_lossy(&bytes).into_owned();
+        post(json!({ "event": "ws.message", "data": text }));
+    }
+
+    if batch.closed {
+        *lock() = None;
+        post(json!({ "event": "ws.close" }));
+    }
+}
+
+#[derive(Default)]
+pub struct Moyu;
+
+impl Moyu {
+    fn reply_error(&self, id: &Value, message: &str) {
+        post(json!({ "id": id, "ok": false, "error": message }));
     }
 
     /// 处理网页发来的一条桥接请求
@@ -72,7 +80,7 @@ impl Moyu {
         let msg: Value = match serde_json::from_str(text) {
             Ok(v) => v,
             Err(e) => {
-                self.send(json!({ "event": "bridge.error", "error": format!("桥接消息不是合法 JSON: {e}") }));
+                post(json!({ "event": "bridge.error", "error": format!("桥接消息不是合法 JSON: {e}") }));
                 return;
             }
         };
@@ -80,18 +88,18 @@ impl Moyu {
         let op = msg.get("op").and_then(Value::as_str).unwrap_or_default();
 
         match op {
-            "http" => self.op_http(&id, &msg, ctx),
+            "http" => self.op_http(&id, &msg),
             "ws.connect" => self.op_ws_connect(&id, &msg, ctx),
             "ws.send" => self.op_ws_send(&id, &msg),
             "ws.close" => {
-                self.ws = None;
-                self.send(json!({ "id": id, "ok": true }));
+                *lock() = None;
+                post(json!({ "id": id, "ok": true }));
             }
             other => self.reply_error(&id, &format!("未知操作: {other}")),
         }
     }
 
-    fn op_http(&mut self, id: &Value, msg: &Value, _ctx: &Invocation) {
+    fn op_http(&mut self, id: &Value, msg: &Value) {
         let url = msg.get("url").and_then(Value::as_str).unwrap_or_default();
         if url.is_empty() {
             return self.reply_error(id, "http 请求缺少 url");
@@ -99,7 +107,7 @@ impl Moyu {
         let method = msg.get("method").and_then(Value::as_str).unwrap_or("GET").to_uppercase();
 
         let mut req = HttpRequest::get(url);
-        req.method = method.clone();
+        req.method = method;
         if let Some(headers) = msg.get("headers").and_then(Value::as_object) {
             for (k, v) in headers {
                 if let Some(v) = v.as_str() {
@@ -120,7 +128,7 @@ impl Moyu {
                     .iter()
                     .map(|(k, v)| (k.clone(), Value::String(v.clone())))
                     .collect();
-                self.send(json!({
+                post(json!({
                     "id": id,
                     "ok": true,
                     "status": resp.status,
@@ -153,23 +161,31 @@ impl Moyu {
 
         match WebSocket::connect(&project, &req) {
             Ok(ws) => {
-                self.ws = Some(ws);
-                self.send(json!({ "id": id, "ok": true }));
-                // 订阅生效前可能已经有帧堆在宿主队列里，这里立刻排空一次
-                self.pump();
+                *lock() = Some(ws);
+                post(json!({ "id": id, "ok": true }));
+                // 订阅生效前可能已经有帧堆在宿主队列里，立刻排空一次
+                pump();
             }
             Err(e) => self.reply_error(id, &e.to_string()),
         }
     }
 
     fn op_ws_send(&mut self, id: &Value, msg: &Value) {
-        let Some(ws) = self.ws.as_ref() else {
+        let data = msg.get("data").and_then(Value::as_str).unwrap_or_default().to_owned();
+        let guard = lock();
+        let Some(ws) = guard.as_ref() else {
+            drop(guard);
             return self.reply_error(id, "WebSocket 尚未连接");
         };
-        let data = msg.get("data").and_then(Value::as_str).unwrap_or_default();
         match ws.send(data.as_bytes()) {
-            Ok(()) => self.send(json!({ "id": id, "ok": true })),
-            Err(e) => self.reply_error(id, &e.to_string()),
+            Ok(()) => {
+                drop(guard);
+                post(json!({ "id": id, "ok": true }));
+            }
+            Err(e) => {
+                drop(guard);
+                self.reply_error(id, &e.to_string());
+            }
         }
     }
 }
@@ -197,7 +213,7 @@ impl Plugin for Moyu {
 
     fn handle_events(&mut self, events: &[Event], _ctx: &Invocation) {
         if events.iter().any(|e| matches!(e, Event::WebSocketReady(_))) {
-            self.pump();
+            pump();
         }
     }
 }

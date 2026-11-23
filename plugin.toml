@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "XEChat Moyu"
-version = "0.1.5"
+version = "0.1.6"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.1.5 — 连接建立后立刻排空宿主队列；页面右下角新增桥接诊断条（收发帧计数）。"
+change-notes = "0.1.6 — 修复连接句柄随插件实例重建丢失（发送报「尚未连接」）的问题：句柄改为进程级静态存储。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
