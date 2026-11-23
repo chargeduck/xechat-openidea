@@ -330,5 +330,5 @@
 
   window.WebSocket = ShimWebSocket
 
-  console.log('[xechat-openidea] bridge ready')
+  console.log('[xechat-openidea] bridge 0.1.2 ready (relay: ' + RELAY_ORIGIN + RELAY_BASE + ')')
 })()

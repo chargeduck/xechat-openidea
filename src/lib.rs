@@ -72,7 +72,7 @@ impl Moyu {
         let msg: Value = match serde_json::from_str(text) {
             Ok(v) => v,
             Err(e) => {
-                self.send(json!({ "event": "bridge.error", "error": format!("bridge: invalid JSON: {e}") }));
+                self.send(json!({ "event": "bridge.error", "error": format!("桥接消息不是合法 JSON: {e}") }));
                 return;
             }
         };
@@ -87,14 +87,14 @@ impl Moyu {
                 self.ws = None;
                 self.send(json!({ "id": id, "ok": true }));
             }
-            other => self.reply_error(&id, &format!("unknown op: {other}")),
+            other => self.reply_error(&id, &format!("未知操作: {other}")),
         }
     }
 
     fn op_http(&mut self, id: &Value, msg: &Value, _ctx: &Invocation) {
         let url = msg.get("url").and_then(Value::as_str).unwrap_or_default();
         if url.is_empty() {
-            return self.reply_error(id, "http: missing url");
+            return self.reply_error(id, "http 请求缺少 url");
         }
         let method = msg.get("method").and_then(Value::as_str).unwrap_or("GET").to_uppercase();
 
@@ -135,11 +135,11 @@ impl Moyu {
     fn op_ws_connect(&mut self, id: &Value, msg: &Value, ctx: &Invocation) {
         let url = msg.get("url").and_then(Value::as_str).unwrap_or_default();
         if url.is_empty() {
-            return self.reply_error(id, "ws.connect: missing url");
+            return self.reply_error(id, "ws.connect 缺少 url");
         }
         // 宿主托管的 WSS 必须绑定到一个项目；没有打开项目时无法建连。
         let Some(project) = ctx.project() else {
-            return self.reply_error(id, "Open a project first — OpenIDEA binds host WebSockets to a project.");
+            return self.reply_error(id, "请先打开一个项目再连接鱼塘（OpenIDEA 的 WebSocket 必须绑定项目）");
         };
 
         let mut req = WebSocketRequest { url: url.to_owned(), ..Default::default() };
@@ -162,7 +162,7 @@ impl Moyu {
 
     fn op_ws_send(&mut self, id: &Value, msg: &Value) {
         let Some(ws) = self.ws.as_ref() else {
-            return self.reply_error(id, "WebSocket is not connected");
+            return self.reply_error(id, "WebSocket 尚未连接");
         };
         let data = msg.get("data").and_then(Value::as_str).unwrap_or_default();
         match ws.send(data.as_bytes()) {
@@ -189,7 +189,7 @@ impl Plugin for Moyu {
                 host::reveal_view(VIEW)?;
                 Ok(None)
             }
-            other => Err(format!("unknown command: {other}").into()),
+            other => Err(format!("未知命令: {other}").into()),
         }
     }
 

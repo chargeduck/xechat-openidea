@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "XEChat Moyu"
-version = "0.1.2"
+version = "0.1.3"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.1.2 — Plain-WS ponds now go through the existing per-pond relay (wss://xechat.lesscoding.net/xechat/relay/...), so ponds without TLS can be reached. The IDE host refuses plain ws:// outside loopback."
+change-notes = "0.1.3 — 明文 WS 鱼塘改走按塘中继；运行时提示改回中文。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
