@@ -1,0 +1,34 @@
+id = "xechat.openidea"
+name = "XEChat Moyu"
+version = "0.1.0"
+description = "摸鱼聊天室：在 IDE 里连 xechat 鱼塘，收发消息、看在线的同事、进游戏大厅。"
+authors = ["xechat"]
+homepage = "https://dld.lesscoding.net"
+license = "MIT"
+change-notes = "0.1.0 — 首个版本：侧边栏摸鱼聊天室（网页视图），WebSocket 与 HTTP 全部走插件桥接。"
+categories = ["tools"]
+icon = "icons/xechat.svg"
+engines.openidea = "^1.6"
+wasm = "dist/plugin.wasm"
+activation = ["on-view:chat", "on-event:websocket-ready"]
+
+[capabilities]
+required = ["events"]
+optional = ["net:dld.lesscoding.net", "net:*.lesscoding.net", "net:ask", "clipboard"]
+
+[[contributes.views]]
+id = "chat"
+title = "摸鱼"
+icon = "icons/xechat.svg"
+location = "right"
+web = "web/index.html"
+
+[[contributes.commands]]
+id = "open"
+title = "XEChat: 打开摸鱼聊天室"
+category = "XEChat"
+icon = "icons/xechat.svg"
+
+[[contributes.menus]]
+menu = "tools"
+command = "open"
