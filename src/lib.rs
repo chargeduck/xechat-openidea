@@ -12,9 +12,11 @@
 
 use base64::engine::general_purpose::STANDARD as B64;
 use base64::Engine as _;
-use openidea_plugin::host::{self, HttpRequest, WebSocket, WebSocketRequest};
+use openidea_plugin::host::{self, WebSocket, WebSocketRequest};
 use openidea_plugin::views::{View, ViewEvent, Viewport, Views};
-use openidea_plugin::{register_plugin, Context, Error, Event, EventKind, Invocation, Plugin};
+use openidea_plugin::{
+    register_plugin, Context, Error, Event, EventKind, HttpRequest, Invocation, Plugin,
+};
 use serde_json::{json, Value};
 
 /// 网页视图的 id，与 plugin.toml 中 `[[contributes.views]] id` 一致

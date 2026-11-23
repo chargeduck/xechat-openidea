@@ -1,3 +1,5 @@
 target/
 web-build/
 .DS_Store
+.idea/
+.openidea/
