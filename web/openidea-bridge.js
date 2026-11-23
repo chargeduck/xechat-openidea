@@ -104,15 +104,24 @@
     return out
   }
 
-  /** 宿主托管的 WSS 只接受 wss://（回环地址可用 ws://），这里就地升级。 */
-  function toWss(url) {
+  /**
+   * 鱼塘的聊天端口是**明文 WS**，而宿主托管的 WebSocket 在非回环地址只接受 wss。
+   * 所以非回环目标一律改走本站已有的按塘中继：
+   *   ws://<pond>:33859/xechat  →  wss://xechat.lesscoding.net/xechat/relay/<pond>/33859
+   * 中继端有白名单（未登记的塘会 403），不是开放代理。
+   */
+  var RELAY_ORIGIN = 'wss://xechat.lesscoding.net'
+  var RELAY_BASE = '/xechat/relay/'
+
+  function routeWs(url) {
     try {
       var u = new URL(url, location.href)
       var loopback = ['localhost', '127.0.0.1', '::1', '[::1]'].indexOf(u.hostname) >= 0
-      if (u.protocol === 'ws:' && !loopback) {
-        u.protocol = 'wss:'
-      }
-      return u.toString()
+      if (loopback) return u.toString()
+      // 已经是 wss 的（目标塘自己有 TLS）就直接用
+      if (u.protocol === 'wss:') return u.toString()
+      var port = u.port || '80'
+      return RELAY_ORIGIN + RELAY_BASE + encodeURIComponent(u.hostname) + '/' + port
     } catch (e) {
       return url
     }
@@ -289,7 +298,7 @@
       if (self.onerror) self.onerror({ type: 'error', message: msg.error })
     })
 
-    call({ op: 'ws.connect', url: toWss(url), headers: {} }).catch(function (e) {
+    call({ op: 'ws.connect', url: routeWs(url), headers: {} }).catch(function (e) {
       self.readyState = 3
       if (self.onerror) self.onerror({ type: 'error', message: e.message })
       if (self.onclose) self.onclose({ type: 'close', wasClean: false })

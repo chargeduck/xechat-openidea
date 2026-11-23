@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "XEChat Moyu"
-version = "0.1.1"
+version = "0.1.2"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.1.1 — The pond host is now a required permission (it is what the chat connects to); new filled icon that renders in the tool window."
+change-notes = "0.1.2 — Plain-WS ponds now go through the existing per-pond relay (wss://xechat.lesscoding.net/xechat/relay/...), so ponds without TLS can be reached. The IDE host refuses plain ws:// outside loopback."
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
@@ -13,7 +13,7 @@ wasm = "dist/plugin.wasm"
 activation = ["on-view:chat", "on-event:websocket-ready"]
 
 [capabilities]
-required = ["events", "net:dld.lesscoding.net"]
+required = ["events", "net:dld.lesscoding.net", "net:xechat.lesscoding.net"]
 optional = ["net:*.lesscoding.net", "net:ask", "clipboard"]
 
 [[contributes.views]]
