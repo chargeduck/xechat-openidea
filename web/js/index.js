@@ -193,7 +193,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   color: var(--accent-color);
 }
 
-.chat-panel[data-v-23767094] {\r
+.chat-panel[data-v-092ae455] {\r
   height: 100%;\r
   display: flex;\r
   flex-direction: column;\r
@@ -201,7 +201,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
 }\r
 \r
 /* ===== 消息列表 ===== */
-.message-list[data-v-23767094] {\r
+.message-list[data-v-092ae455] {\r
   flex: 1;\r
   overflow-y: scroll;\r
   padding: 12px 16px;\r
@@ -209,7 +209,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
 }\r
 \r
 /* ===== 右下角悬浮按钮组 ===== */
-.scroll-float[data-v-23767094] {\r
+.scroll-float[data-v-092ae455] {\r
   position: absolute;\r
   right: 14px;\r
   bottom: 68px;\r
@@ -221,7 +221,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
 }\r
 \r
 /* ===== 极简 ⇄ 普通 开关（右下角，和回到顶部/底部排在一起） ===== */
-.ui-mode-switch[data-v-23767094] {\r
+.ui-mode-switch[data-v-092ae455] {\r
   display: flex;\r
   align-items: center;\r
   gap: 6px;\r
@@ -237,28 +237,28 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   white-space: nowrap;\r
   transition: opacity 0.2s, border-color 0.2s;
 }
-.ui-mode-switch[data-v-23767094]:hover {\r
+.ui-mode-switch[data-v-092ae455]:hover {\r
   opacity: 1;\r
   border-color: var(--accent-color);
 }
-.ui-mode-label[data-v-23767094] {\r
+.ui-mode-label[data-v-092ae455] {\r
   font-size: 11px;\r
   line-height: 1;\r
   letter-spacing: 0.5px;\r
   color: var(--text-secondary);
 }
-.ui-mode-switch[data-v-23767094] .el-switch {\r
+.ui-mode-switch[data-v-092ae455] .el-switch {\r
   height: 16px;\r
   --el-switch-on-color: var(--accent-color);\r
   --el-switch-off-color: var(--border-color);\r
   --el-switch-button-size: 12px;
 }
-.ui-mode-switch[data-v-23767094] .el-switch__core {\r
+.ui-mode-switch[data-v-092ae455] .el-switch__core {\r
   min-width: 28px;\r
   height: 16px;\r
   border-radius: 8px;
 }
-.float-btn[data-v-23767094] {\r
+.float-btn[data-v-092ae455] {\r
   border: 1px solid var(--border-color);\r
   background: var(--bg-primary);\r
   color: var(--text-primary);\r
@@ -266,19 +266,19 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   opacity: 0.92;\r
   transition: opacity 0.2s, border-color 0.2s, color 0.2s;
 }
-.float-btn[data-v-23767094]:hover {\r
+.float-btn[data-v-092ae455]:hover {\r
   opacity: 1;\r
   border-color: var(--accent-color);\r
   color: var(--accent-color);\r
   background: var(--bg-primary);
 }
-.message-item[data-v-23767094] {\r
+.message-item[data-v-092ae455] {\r
   padding: 4px 0;\r
   border-bottom: 1px solid var(--border-color);
 }\r
 \r
 /* ===== 系统消息：VitePress 风格彩色容器块 ===== */
-.system-msg-box[data-v-23767094] {\r
+.system-msg-box[data-v-092ae455] {\r
   display: flex;\r
   align-items: flex-start;\r
   gap: 8px;\r
@@ -289,59 +289,59 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   font-size: 12px;\r
   line-height: 1.5;
 }
-.system-msg-box .system-msg-icon[data-v-23767094] {\r
+.system-msg-box .system-msg-icon[data-v-092ae455] {\r
   flex-shrink: 0;\r
   font-size: 13px;\r
   margin-top: 2px;
 }
-.system-msg-box .system-msg-body[data-v-23767094] {\r
+.system-msg-box .system-msg-body[data-v-092ae455] {\r
   flex: 1;\r
   min-width: 0;
 }
-.system-msg-box .system-msg-title[data-v-23767094] {\r
+.system-msg-box .system-msg-title[data-v-092ae455] {\r
   font-weight: 600;\r
   margin-bottom: 2px;\r
   font-size: 12px;
 }
-.system-msg-box .system-msg-text[data-v-23767094] {\r
+.system-msg-box .system-msg-text[data-v-092ae455] {\r
   word-break: break-word;
 }
-.system-msg-box.error[data-v-23767094] {\r
+.system-msg-box.error[data-v-092ae455] {\r
   border-color: var(--danger-color);\r
   background: rgba(244, 71, 71, 0.08);
 }
-.system-msg-box.error .system-msg-icon[data-v-23767094] { color: var(--danger-color);
+.system-msg-box.error .system-msg-icon[data-v-092ae455] { color: var(--danger-color);
 }
-.system-msg-box.error .system-msg-title[data-v-23767094] { color: var(--danger-color);
+.system-msg-box.error .system-msg-title[data-v-092ae455] { color: var(--danger-color);
 }
-.system-msg-box.notice[data-v-23767094] {\r
+.system-msg-box.notice[data-v-092ae455] {\r
   border-color: var(--success-color);\r
   background: rgba(78, 201, 176, 0.08);
 }
-.system-msg-box.notice .system-msg-icon[data-v-23767094] { color: var(--success-color);
+.system-msg-box.notice .system-msg-icon[data-v-092ae455] { color: var(--success-color);
 }
-.system-msg-box.notice .system-msg-title[data-v-23767094] { color: var(--success-color);
+.system-msg-box.notice .system-msg-title[data-v-092ae455] { color: var(--success-color);
 }
-.system-msg-box.info[data-v-23767094] {\r
+.system-msg-box.info[data-v-092ae455] {\r
   border-color: var(--accent-color);\r
   background: rgba(0, 122, 204, 0.08);
 }
-.system-msg-box.info .system-msg-icon[data-v-23767094] { color: var(--accent-color);
+.system-msg-box.info .system-msg-icon[data-v-092ae455] { color: var(--accent-color);
 }
-.system-msg-box.info .system-msg-title[data-v-23767094] { color: var(--accent-color);
+.system-msg-box.info .system-msg-title[data-v-092ae455] { color: var(--accent-color);
 }\r
 \r
 /* 浅色主题下系统消息背景微调 */
-:root.light .system-msg-box.error[data-v-23767094]  { background: rgba(244, 71, 71, 0.06);
+:root.light .system-msg-box.error[data-v-092ae455]  { background: rgba(244, 71, 71, 0.06);
 }
-:root.light .system-msg-box.notice[data-v-23767094] { background: rgba(78, 201, 176, 0.06);
+:root.light .system-msg-box.notice[data-v-092ae455] { background: rgba(78, 201, 176, 0.06);
 }
-:root.light .system-msg-box.info[data-v-23767094]   { background: rgba(0, 120, 212, 0.06);
+:root.light .system-msg-box.info[data-v-092ae455]   { background: rgba(0, 120, 212, 0.06);
 }
-.message-item[data-v-23767094]:last-child {\r
+.message-item[data-v-092ae455]:last-child {\r
   border-bottom: none;
 }
-.empty-hint[data-v-23767094] {\r
+.empty-hint[data-v-092ae455] {\r
   color: var(--text-muted);\r
   text-align: center;\r
   padding: 40px 0;\r
@@ -349,23 +349,23 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
 }\r
 \r
 /* ===== 底部输入区域 ===== */
-.input-area[data-v-23767094] {\r
+.input-area[data-v-092ae455] {\r
   position: relative;\r
   border-top: 1px solid var(--border-color);\r
   padding: 8px 12px;\r
   background: var(--bg-secondary);
 }
-.input-row[data-v-23767094] {\r
+.input-row[data-v-092ae455] {\r
   display: flex;\r
   align-items: flex-start;\r
   gap: 6px;
 }
-.input-row .chat-input[data-v-23767094] {\r
+.input-row .chat-input[data-v-092ae455] {\r
   flex: 1;
 }\r
 \r
 /* ===== @ 提及弹层 ===== */
-.cmd-panel[data-v-23767094] {\r
+.cmd-panel[data-v-092ae455] {\r
   position: absolute;\r
   bottom: 56px;\r
   left: 12px;\r
@@ -380,7 +380,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   padding: 4px 0;\r
   font-size: 13px;
 }
-.cmd-item[data-v-23767094] {\r
+.cmd-item[data-v-092ae455] {\r
   display: flex;\r
   flex-direction: row;\r
   align-items: center;\r
@@ -390,18 +390,18 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   color: var(--text-primary);\r
   white-space: nowrap;
 }
-.cmd-item[data-v-23767094]:hover,\r
-.cmd-item.active[data-v-23767094] {\r
+.cmd-item[data-v-092ae455]:hover,\r
+.cmd-item.active[data-v-092ae455] {\r
   background: var(--bg-hover, rgba(128, 128, 128, 0.12));
 }
-.cmd-name[data-v-23767094] {\r
+.cmd-name[data-v-092ae455] {\r
   color: var(--accent-color);\r
   font-family: Consolas, Monaco, monospace;\r
   white-space: nowrap;\r
   overflow: hidden;\r
   text-overflow: ellipsis;
 }
-.cmd-desc[data-v-23767094] {\r
+.cmd-desc[data-v-092ae455] {\r
   color: var(--text-secondary);\r
   font-size: 12px;\r
   white-space: nowrap;\r
@@ -410,11 +410,11 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   flex: 1;\r
   min-width: 0;
 }
-.cmd-empty[data-v-23767094] {\r
+.cmd-empty[data-v-092ae455] {\r
   padding: 6px 12px;\r
   color: var(--text-secondary);
 }
-.at-panel[data-v-23767094] {\r
+.at-panel[data-v-092ae455] {\r
   position: absolute;\r
   left: 12px;\r
   right: 12px;\r
@@ -427,7 +427,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);\r
   z-index: 20;
 }
-.at-item[data-v-23767094] {\r
+.at-item[data-v-092ae455] {\r
   display: flex;\r
   align-items: center;\r
   gap: 8px;\r
@@ -436,23 +436,23 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   color: var(--text-primary);\r
   cursor: pointer;
 }
-.at-item.active[data-v-23767094],\r
-.at-item[data-v-23767094]:hover {\r
+.at-item.active[data-v-092ae455],\r
+.at-item[data-v-092ae455]:hover {\r
   background: var(--bg-hover, rgba(128, 128, 128, 0.12));
 }
-.at-status[data-v-23767094] {\r
+.at-status[data-v-092ae455] {\r
   font-size: 13px;\r
   width: 18px;\r
   text-align: center;
 }
-.at-name[data-v-23767094] {\r
+.at-name[data-v-092ae455] {\r
   font-weight: 500;
 }
-.at-region[data-v-23767094] {\r
+.at-region[data-v-092ae455] {\r
   color: var(--text-secondary);\r
   font-size: 12px;
 }
-.at-empty[data-v-23767094] {\r
+.at-empty[data-v-092ae455] {\r
   padding: 12px;\r
   text-align: center;\r
   color: var(--text-secondary);\r
@@ -463,36 +463,76 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
    摸鱼场景下彩色文字（系统提示、帮助 tip、行内 {color:xxx}、链接、色块标题）\r
    比正文本身更扎眼，路过一眼就能看到。极简模式下一律收敛到灰阶：\r
    只保留「正文 / 次要文字」两档，不出现任何强调色。 */
-.chat-panel.is-minimal[data-v-23767094] {\r
+.chat-panel.is-minimal[data-v-092ae455] {\r
   --accent-color: var(--text-secondary);\r
   --success-color: var(--text-secondary);\r
   --danger-color: var(--text-secondary);
 }\r
 \r
 /* 系统消息块：去掉左侧彩色竖条与彩色标题 */
-.chat-panel.is-minimal .system-msg-box[data-v-23767094],\r
-.chat-panel.is-minimal .system-msg-box.error[data-v-23767094],\r
-.chat-panel.is-minimal .system-msg-box.notice[data-v-23767094],\r
-.chat-panel.is-minimal .system-msg-box.info[data-v-23767094] {\r
+.chat-panel.is-minimal .system-msg-box[data-v-092ae455],\r
+.chat-panel.is-minimal .system-msg-box.error[data-v-092ae455],\r
+.chat-panel.is-minimal .system-msg-box.notice[data-v-092ae455],\r
+.chat-panel.is-minimal .system-msg-box.info[data-v-092ae455] {\r
   border-left-color: var(--border-color);
 }
-.chat-panel.is-minimal .system-msg-box .system-msg-icon[data-v-23767094],\r
-.chat-panel.is-minimal .system-msg-box .system-msg-title[data-v-23767094],\r
-.chat-panel.is-minimal .system-msg-box .system-msg-text[data-v-23767094] {\r
+.chat-panel.is-minimal .system-msg-box .system-msg-icon[data-v-092ae455],\r
+.chat-panel.is-minimal .system-msg-box .system-msg-title[data-v-092ae455],\r
+.chat-panel.is-minimal .system-msg-box .system-msg-text[data-v-092ae455] {\r
   color: var(--text-secondary);
 }\r
 \r
 /* Markdown 正文：标题、链接、行内彩色 span、引用块一律平掉颜色（图片不动） */
-.chat-panel.is-minimal[data-v-23767094] .markdown-body {\r
+.chat-panel.is-minimal[data-v-092ae455] .markdown-body {\r
   color: var(--text-secondary);
 }
-.chat-panel.is-minimal[data-v-23767094] .markdown-body *:not(img) {\r
+.chat-panel.is-minimal[data-v-092ae455] .markdown-body *:not(img) {\r
   color: inherit !important;\r
   text-shadow: none !important;
 }
-.chat-panel.is-minimal[data-v-23767094] .markdown-body blockquote {\r
+.chat-panel.is-minimal[data-v-092ae455] .markdown-body blockquote {\r
   border-left-color: var(--border-color) !important;\r
   background: transparent !important;
+}\r
+\r
+/* 图片按钮：和样式选择器同一行，小一点不抢眼 */
+.img-btn[data-v-092ae455] {\r
+  margin-right: 6px;\r
+  flex: 0 0 auto;
+}\r
+\r
+/* 聊天区右键菜单 */
+.ctx-menu[data-v-092ae455] {\r
+  position: fixed;\r
+  z-index: 3000;\r
+  min-width: 168px;\r
+  padding: 4px 0;\r
+  background: var(--el-bg-color-overlay, #fff);\r
+  border: 1px solid var(--el-border-color-light, #e4e7ed);\r
+  border-radius: 6px;\r
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .16);\r
+  font-size: 13px;\r
+  user-select: none;
+}
+.ctx-item[data-v-092ae455] {\r
+  padding: 7px 14px;\r
+  cursor: pointer;\r
+  color: var(--el-text-color-regular, #606266);\r
+  white-space: nowrap;
+}
+.ctx-item[data-v-092ae455]:hover {\r
+  background: var(--el-fill-color-light, #f5f7fa);\r
+  color: var(--el-color-primary, #409eff);
+}
+.ctx-item.disabled[data-v-092ae455] {\r
+  color: var(--el-text-color-disabled, #c0c4cc);\r
+  cursor: default;\r
+  background: none;
+}
+.ctx-sep[data-v-092ae455] {\r
+  height: 1px;\r
+  margin: 4px 0;\r
+  background: var(--el-border-color-lighter, #ebeef5);
 }\r
 
 .tool-panel[data-v-6d47dd79] {\r
@@ -74048,6 +74088,24 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
       return true;
     }
     /**
+     * 发送图片（REACT/UPLOAD）：把 base64 字节交给服务端落盘。
+     *
+     * 服务端（UploadReactHandler）落盘后会**主动广播**一条 IMAGE 消息，
+     * 所以客户端发完不需要再发 CHAT 帧。受 SEND_FILE 权限与全局
+     * UPLOAD_FILE_MAX_SIZE（默认 1MB，管理员可调）限制。
+     *
+     * @param {string} base64 图片字节的 base64（不含 data: 前缀）
+     * @param {string} fileType 扩展名 png/jpg/gif/bmp
+     */
+    uploadImage(base64, fileType) {
+      if (!base64) return false;
+      this._send({
+        action: "REACT",
+        body: { react: "UPLOAD", body: { fileType: fileType || "png", bytes: base64 } }
+      });
+      return true;
+    }
+    /**
      * 踢人：走服务端特殊指令聊天帧（服务端 FORCE_DISCONNECTION 识别「踢人:::{用户名}」，仅管理员生效）。
      * @param {string} username 目标用户昵称
      */
@@ -74382,6 +74440,17 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
         return this._transport.adminReact(operate, permissions, uid2);
       }
       console.warn("[Transport] 当前模式不支持 adminReact: " + this.mode);
+      return false;
+    }
+    /**
+     * 发送图片：WS 模式走 REACT/UPLOAD；JSBridge 模式（IDEA 端）由宿主处理，
+     * 这里返回 false 让调用方提示"当前端不支持"。
+     */
+    uploadImage(base64, fileType) {
+      if (this._transport && typeof this._transport.uploadImage === "function") {
+        return this._transport.uploadImage(base64, fileType);
+      }
+      console.warn("[Transport] 当前模式不支持 uploadImage: " + this.mode);
       return false;
     }
     /** 踢人：WS 走特殊指令聊天帧，JSBridge 走 execCommand 聊天指令 */
@@ -75126,6 +75195,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
     let userInfo = username;
     if (status) userInfo += " (" + status + ")";
     if (platform2) userInfo += " " + platform2;
+    if (data.user && data.user.role === "ADMIN") userInfo += " ☆";
     parts.push(userInfo + "：");
     return parts.join(" ");
   }
@@ -76242,7 +76312,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
       const raw = localStorage.getItem(HISTORY_KEY);
       if (!raw) return [];
       const arr = JSON.parse(raw);
-      return Array.isArray(arr) ? arr.filter((item) => typeof item === "string").slice(-MAX_HISTORY) : [];
+      return Array.isArray(arr) ? arr.filter((item) => typeof item === "string" && item.trim().startsWith("#")).slice(-MAX_HISTORY) : [];
     } catch (e) {
       return [];
     }
@@ -76253,11 +76323,13 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
     }),
     actions: {
       /**
-       * 记录一条输入：连续重复自动去重；超出上限时丢弃最旧条目。
+       * 记录一条输入：只记命令（# 开头），连续重复自动去重；超出上限时丢弃最旧条目。
+       *
+       * 普通聊天内容不进历史——↑ 只用于快速翻回命令，回填上次说的话没有意义。
        */
       push(cmd) {
         const text2 = (cmd || "").trim();
-        if (!text2) return;
+        if (!text2 || !text2.startsWith("#")) return;
         if (this.commands[this.commands.length - 1] === text2) return;
         this.commands.push(text2);
         if (this.commands.length > MAX_HISTORY) {
@@ -96285,6 +96357,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
   const _hoisted_19$2 = { class: "cmd-name" };
   const _hoisted_20$2 = { class: "cmd-desc" };
   const _hoisted_21$2 = { class: "input-row" };
+  const IMAGE_MAX_BYTES = 1 << 20;
   const _sfc_main$9 = {
     __name: "ChatPanel",
     setup(__props) {
@@ -96303,6 +96376,9 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
       const messageListRef = /* @__PURE__ */ ref(null);
       const inputRef = /* @__PURE__ */ ref(null);
       const inputText = /* @__PURE__ */ ref("");
+      const fileInputRef = /* @__PURE__ */ ref(null);
+      const uploading = /* @__PURE__ */ ref(false);
+      const ctxMenu = /* @__PURE__ */ ref({ show: false, x: 0, y: 0, link: "", selection: "" });
       const histIndex = /* @__PURE__ */ ref(-1);
       const histDraft = /* @__PURE__ */ ref("");
       const showTopBtn = /* @__PURE__ */ ref(false);
@@ -97037,6 +97113,102 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
         }
         return toUsers;
       }
+      function pickImage() {
+        if (uploading.value) return;
+        if (fileInputRef.value) {
+          fileInputRef.value.value = "";
+          fileInputRef.value.click();
+        }
+      }
+      function onPickFile(e) {
+        const file = e.target && e.target.files && e.target.files[0];
+        if (file) uploadImageFile(file);
+      }
+      function onPaste(e) {
+        const items = e.clipboardData && e.clipboardData.items || [];
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].type && items[i].type.indexOf("image/") === 0) {
+            const file = items[i].getAsFile();
+            if (file) {
+              e.preventDefault();
+              uploadImageFile(file);
+              return;
+            }
+          }
+        }
+      }
+      function uploadImageFile(file) {
+        const type = (file.type || "").split("/")[1] || "png";
+        if (["png", "jpeg", "jpg", "gif", "bmp"].indexOf(type) < 0) {
+          ElMessage.warning("只支持 png / jpg / gif / bmp 图片");
+          return;
+        }
+        if (file.size > IMAGE_MAX_BYTES) {
+          ElMessage.warning("图片不能超过 " + Math.round(IMAGE_MAX_BYTES / 1024) + " KB");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function() {
+          const dataUrl = String(reader.result || "");
+          const base64 = dataUrl.substring(dataUrl.indexOf(",") + 1);
+          uploading.value = true;
+          const ok = transport.uploadImage(base64, type === "jpeg" ? "jpg" : type);
+          setTimeout(function() {
+            uploading.value = false;
+          }, ok ? 4e3 : 0);
+          if (!ok) ElMessage.warning("当前端不支持发送图片");
+        };
+        reader.onerror = function() {
+          ElMessage.error("读取图片失败");
+        };
+        reader.readAsDataURL(file);
+      }
+      function onContextMenu(e) {
+        const sel = window.getSelection ? String(window.getSelection() || "") : "";
+        ctxMenu.value = {
+          show: true,
+          x: Math.min(e.clientX, window.innerWidth - 180),
+          y: Math.min(e.clientY, window.innerHeight - 200),
+          selection: sel.trim(),
+          link: sel.trim() && /^(https?:\/\/|www\.)/i.test(sel.trim()) ? sel.trim() : ""
+        };
+        const close2 = function() {
+          ctxMenu.value.show = false;
+          window.removeEventListener("click", close2);
+          window.removeEventListener("keydown", onEsc);
+        };
+        const onEsc = function(ev) {
+          if (ev.key === "Escape") close2();
+        };
+        setTimeout(function() {
+          window.addEventListener("click", close2);
+          window.addEventListener("keydown", onEsc);
+        }, 0);
+      }
+      function ctxCopy() {
+        return __async(this, null, function* () {
+          const text2 = ctxMenu.value.selection;
+          ctxMenu.value.show = false;
+          if (!text2) return;
+          try {
+            yield navigator.clipboard.writeText(text2);
+            ElMessage.success("已复制");
+          } catch (e) {
+            ElMessage.warning("复制失败，请手动选择");
+          }
+        });
+      }
+      function ctxOpenLink() {
+        const url = ctxMenu.value.link;
+        ctxMenu.value.show = false;
+        if (!url) return;
+        window.open(url.indexOf("http") === 0 ? url : "https://" + url, "_blank");
+      }
+      function ctxCommand(cmd) {
+        ctxMenu.value.show = false;
+        inputText.value = cmd;
+        send();
+      }
       function send() {
         return __async(this, null, function* () {
           const text2 = inputText.value.trim();
@@ -97136,6 +97308,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
         const _component_el_icon = resolveComponent("el-icon");
         const _component_el_button = resolveComponent("el-button");
         const _component_Bottom = resolveComponent("Bottom");
+        const _component_el_tooltip = resolveComponent("el-tooltip");
         const _component_el_input = resolveComponent("el-input");
         return openBlock(), createElementBlock("div", {
           class: normalizeClass(["chat-panel", { "is-minimal": minimalMode.value }])
@@ -97144,7 +97317,8 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
             class: "message-list",
             ref_key: "messageListRef",
             ref: messageListRef,
-            onScroll: onMessageScroll
+            onScroll: onMessageScroll,
+            onContextmenu: withModifiers(onContextMenu, ["prevent"])
           }, [
             (openBlock(true), createElementBlock(Fragment, null, renderList(unref(chatStore).messages, (msg, idx) => {
               return openBlock(), createElementBlock("div", {
@@ -97251,6 +97425,39 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
             ])) : createCommentVNode("", true),
             createBaseVNode("div", _hoisted_21$2, [
               createVNode(StyleSelector, { onSelect: onStyleSelect }),
+              createVNode(_component_el_tooltip, {
+                content: "发送图片（也可以直接 Ctrl+V 粘贴截图）",
+                placement: "top"
+              }, {
+                default: withCtx(() => [
+                  createVNode(_component_el_button, {
+                    class: "img-btn",
+                    circle: "",
+                    size: "small",
+                    loading: uploading.value,
+                    onClick: pickImage
+                  }, {
+                    default: withCtx(() => [
+                      createVNode(_component_el_icon, { size: 14 }, {
+                        default: withCtx(() => [
+                          createVNode(unref(picture_default))
+                        ]),
+                        _: 1
+                      })
+                    ]),
+                    _: 1
+                  }, 8, ["loading"])
+                ]),
+                _: 1
+              }),
+              createBaseVNode("input", {
+                ref_key: "fileInputRef",
+                ref: fileInputRef,
+                type: "file",
+                accept: "image/png,image/jpeg,image/gif,image/bmp",
+                style: { "display": "none" },
+                onChange: onPickFile
+              }, null, 544),
               createVNode(_component_el_input, {
                 ref_key: "inputRef",
                 ref: inputRef,
@@ -97266,15 +97473,45 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
                 ],
                 onCompositionstart: onCompositionStart2,
                 onCompositionend: onCompositionEnd2,
+                onPaste,
                 class: "chat-input"
               }, null, 8, ["modelValue"])
             ])
-          ])
+          ]),
+          ctxMenu.value.show ? (openBlock(), createElementBlock("div", {
+            key: 0,
+            class: "ctx-menu",
+            style: normalizeStyle({ left: ctxMenu.value.x + "px", top: ctxMenu.value.y + "px" }),
+            onClick: _cache[4] || (_cache[4] = withModifiers(() => {
+            }, ["stop"]))
+          }, [
+            createBaseVNode("div", {
+              class: normalizeClass(["ctx-item", { disabled: !ctxMenu.value.selection }]),
+              onClick: ctxCopy
+            }, "复制选中", 2),
+            createBaseVNode("div", {
+              class: normalizeClass(["ctx-item", { disabled: !ctxMenu.value.link }]),
+              onClick: ctxOpenLink
+            }, "打开链接", 2),
+            _cache[5] || (_cache[5] = createBaseVNode("div", { class: "ctx-sep" }, null, -1)),
+            createBaseVNode("div", {
+              class: "ctx-item",
+              onClick: _cache[1] || (_cache[1] = ($event) => ctxCommand("#help"))
+            }, "需要帮助（#help）"),
+            createBaseVNode("div", {
+              class: "ctx-item",
+              onClick: _cache[2] || (_cache[2] = ($event) => ctxCommand("#clean"))
+            }, "清屏（#clean）"),
+            createBaseVNode("div", {
+              class: "ctx-item",
+              onClick: _cache[3] || (_cache[3] = ($event) => ctxCommand("#exit"))
+            }, "退出鱼塘（#exit）")
+          ], 4)) : createCommentVNode("", true)
         ], 2);
       };
     }
   };
-  const ChatPanel = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-23767094"]]);
+  const ChatPanel = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-092ae455"]]);
   const _hoisted_1$8 = { class: "tool-panel" };
   const _hoisted_2$8 = { class: "tool-grid" };
   const _hoisted_3$8 = ["onClick"];

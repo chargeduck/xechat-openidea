@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "xechat"
-version = "0.3.1"
+version = "0.3.3"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.3.1 — 隐私修复：日志只记连接 id、帧类型/序号/字节数与错误，不再记录任何消息正文（IDE 日志与项目内日志一致）；README 补充日志说明与 project.write 用途。"
+change-notes = "0.3.3 — 同步 xechat-web：管理员昵称后加 ☆；↑ 历史只保留 # 命令；聊天区右键菜单（复制/打开链接/常用命令）；支持发送图片（按钮或 Ctrl+V 粘贴，REACT/UPLOAD）。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
