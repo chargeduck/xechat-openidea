@@ -9,3 +9,9 @@ web-build/
 *.zip
 Logs/
 logs/
+
+# 本地 SDK 备份
+vendor/openidea-plugin-1.15.bak/
+
+# 桥接日志
+.xechat/
