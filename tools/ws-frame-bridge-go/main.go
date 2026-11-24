@@ -293,18 +293,55 @@ func (c *conn) read() (byte, []byte, error) {
 		}
 	}
 	if !fin {
-		return 0, nil, errors.New("不支持分片帧")
+		// 客户端（Chrome 等）会把大消息拆成分片，递归读完后续 Continuation 再拼起来
+		_, rest, err := c.read()
+		if err != nil {
+			return 0, nil, err
+		}
+		return op, append(payload, rest...), nil
 	}
 	return op, payload, nil
 }
 
+// maxFrameChunk 单帧最大 payload。Netty 默认 64KB，这里留余量取 60000，
+// 超过就拆成 Text + Continuation 帧，让大消息（图片 base64）能整体通过。
+const maxFrameChunk = 60000
+
+// write 按 ≤maxFrameChunk 分片发送一条消息：首帧带原 opcode，后续用 continuation(0x0)。
 func (c *conn) write(op byte, payload []byte) error {
+	for off := 0; ; {
+		end := off + maxFrameChunk
+		fin := true
+		if end >= len(payload) {
+			end = len(payload)
+		} else {
+			fin = false
+		}
+		frameOp := op
+		if off > 0 {
+			frameOp = 0x0
+		}
+		if err := c.writeFrame(fin, frameOp, payload[off:end]); err != nil {
+			return err
+		}
+		if fin {
+			return nil
+		}
+		off = end
+	}
+}
+
+func (c *conn) writeFrame(fin bool, op byte, payload []byte) error {
 	c.wmu.Lock()
 	defer c.wmu.Unlock()
 
 	n := len(payload)
 	hdr := make([]byte, 0, 14)
-	hdr = append(hdr, 0x80|op) // FIN=1
+	b0 := op
+	if fin {
+		b0 |= 0x80 // FIN=1
+	}
+	hdr = append(hdr, b0)
 
 	var b2 byte
 	if c.masked {

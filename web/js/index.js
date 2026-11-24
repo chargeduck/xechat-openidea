@@ -193,7 +193,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   color: var(--accent-color);
 }
 
-.chat-panel[data-v-092ae455] {\r
+.chat-panel[data-v-ddd5447d] {\r
   height: 100%;\r
   display: flex;\r
   flex-direction: column;\r
@@ -201,7 +201,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
 }\r
 \r
 /* ===== 消息列表 ===== */
-.message-list[data-v-092ae455] {\r
+.message-list[data-v-ddd5447d] {\r
   flex: 1;\r
   overflow-y: scroll;\r
   padding: 12px 16px;\r
@@ -209,7 +209,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
 }\r
 \r
 /* ===== 右下角悬浮按钮组 ===== */
-.scroll-float[data-v-092ae455] {\r
+.scroll-float[data-v-ddd5447d] {\r
   position: absolute;\r
   right: 14px;\r
   bottom: 68px;\r
@@ -221,7 +221,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
 }\r
 \r
 /* ===== 极简 ⇄ 普通 开关（右下角，和回到顶部/底部排在一起） ===== */
-.ui-mode-switch[data-v-092ae455] {\r
+.ui-mode-switch[data-v-ddd5447d] {\r
   display: flex;\r
   align-items: center;\r
   gap: 6px;\r
@@ -237,28 +237,28 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   white-space: nowrap;\r
   transition: opacity 0.2s, border-color 0.2s;
 }
-.ui-mode-switch[data-v-092ae455]:hover {\r
+.ui-mode-switch[data-v-ddd5447d]:hover {\r
   opacity: 1;\r
   border-color: var(--accent-color);
 }
-.ui-mode-label[data-v-092ae455] {\r
+.ui-mode-label[data-v-ddd5447d] {\r
   font-size: 11px;\r
   line-height: 1;\r
   letter-spacing: 0.5px;\r
   color: var(--text-secondary);
 }
-.ui-mode-switch[data-v-092ae455] .el-switch {\r
+.ui-mode-switch[data-v-ddd5447d] .el-switch {\r
   height: 16px;\r
   --el-switch-on-color: var(--accent-color);\r
   --el-switch-off-color: var(--border-color);\r
   --el-switch-button-size: 12px;
 }
-.ui-mode-switch[data-v-092ae455] .el-switch__core {\r
+.ui-mode-switch[data-v-ddd5447d] .el-switch__core {\r
   min-width: 28px;\r
   height: 16px;\r
   border-radius: 8px;
 }
-.float-btn[data-v-092ae455] {\r
+.float-btn[data-v-ddd5447d] {\r
   border: 1px solid var(--border-color);\r
   background: var(--bg-primary);\r
   color: var(--text-primary);\r
@@ -266,19 +266,19 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   opacity: 0.92;\r
   transition: opacity 0.2s, border-color 0.2s, color 0.2s;
 }
-.float-btn[data-v-092ae455]:hover {\r
+.float-btn[data-v-ddd5447d]:hover {\r
   opacity: 1;\r
   border-color: var(--accent-color);\r
   color: var(--accent-color);\r
   background: var(--bg-primary);
 }
-.message-item[data-v-092ae455] {\r
+.message-item[data-v-ddd5447d] {\r
   padding: 4px 0;\r
   border-bottom: 1px solid var(--border-color);
 }\r
 \r
 /* ===== 系统消息：VitePress 风格彩色容器块 ===== */
-.system-msg-box[data-v-092ae455] {\r
+.system-msg-box[data-v-ddd5447d] {\r
   display: flex;\r
   align-items: flex-start;\r
   gap: 8px;\r
@@ -289,59 +289,59 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   font-size: 12px;\r
   line-height: 1.5;
 }
-.system-msg-box .system-msg-icon[data-v-092ae455] {\r
+.system-msg-box .system-msg-icon[data-v-ddd5447d] {\r
   flex-shrink: 0;\r
   font-size: 13px;\r
   margin-top: 2px;
 }
-.system-msg-box .system-msg-body[data-v-092ae455] {\r
+.system-msg-box .system-msg-body[data-v-ddd5447d] {\r
   flex: 1;\r
   min-width: 0;
 }
-.system-msg-box .system-msg-title[data-v-092ae455] {\r
+.system-msg-box .system-msg-title[data-v-ddd5447d] {\r
   font-weight: 600;\r
   margin-bottom: 2px;\r
   font-size: 12px;
 }
-.system-msg-box .system-msg-text[data-v-092ae455] {\r
+.system-msg-box .system-msg-text[data-v-ddd5447d] {\r
   word-break: break-word;
 }
-.system-msg-box.error[data-v-092ae455] {\r
+.system-msg-box.error[data-v-ddd5447d] {\r
   border-color: var(--danger-color);\r
   background: rgba(244, 71, 71, 0.08);
 }
-.system-msg-box.error .system-msg-icon[data-v-092ae455] { color: var(--danger-color);
+.system-msg-box.error .system-msg-icon[data-v-ddd5447d] { color: var(--danger-color);
 }
-.system-msg-box.error .system-msg-title[data-v-092ae455] { color: var(--danger-color);
+.system-msg-box.error .system-msg-title[data-v-ddd5447d] { color: var(--danger-color);
 }
-.system-msg-box.notice[data-v-092ae455] {\r
+.system-msg-box.notice[data-v-ddd5447d] {\r
   border-color: var(--success-color);\r
   background: rgba(78, 201, 176, 0.08);
 }
-.system-msg-box.notice .system-msg-icon[data-v-092ae455] { color: var(--success-color);
+.system-msg-box.notice .system-msg-icon[data-v-ddd5447d] { color: var(--success-color);
 }
-.system-msg-box.notice .system-msg-title[data-v-092ae455] { color: var(--success-color);
+.system-msg-box.notice .system-msg-title[data-v-ddd5447d] { color: var(--success-color);
 }
-.system-msg-box.info[data-v-092ae455] {\r
+.system-msg-box.info[data-v-ddd5447d] {\r
   border-color: var(--accent-color);\r
   background: rgba(0, 122, 204, 0.08);
 }
-.system-msg-box.info .system-msg-icon[data-v-092ae455] { color: var(--accent-color);
+.system-msg-box.info .system-msg-icon[data-v-ddd5447d] { color: var(--accent-color);
 }
-.system-msg-box.info .system-msg-title[data-v-092ae455] { color: var(--accent-color);
+.system-msg-box.info .system-msg-title[data-v-ddd5447d] { color: var(--accent-color);
 }\r
 \r
 /* 浅色主题下系统消息背景微调 */
-:root.light .system-msg-box.error[data-v-092ae455]  { background: rgba(244, 71, 71, 0.06);
+:root.light .system-msg-box.error[data-v-ddd5447d]  { background: rgba(244, 71, 71, 0.06);
 }
-:root.light .system-msg-box.notice[data-v-092ae455] { background: rgba(78, 201, 176, 0.06);
+:root.light .system-msg-box.notice[data-v-ddd5447d] { background: rgba(78, 201, 176, 0.06);
 }
-:root.light .system-msg-box.info[data-v-092ae455]   { background: rgba(0, 120, 212, 0.06);
+:root.light .system-msg-box.info[data-v-ddd5447d]   { background: rgba(0, 120, 212, 0.06);
 }
-.message-item[data-v-092ae455]:last-child {\r
+.message-item[data-v-ddd5447d]:last-child {\r
   border-bottom: none;
 }
-.empty-hint[data-v-092ae455] {\r
+.empty-hint[data-v-ddd5447d] {\r
   color: var(--text-muted);\r
   text-align: center;\r
   padding: 40px 0;\r
@@ -349,23 +349,23 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
 }\r
 \r
 /* ===== 底部输入区域 ===== */
-.input-area[data-v-092ae455] {\r
+.input-area[data-v-ddd5447d] {\r
   position: relative;\r
   border-top: 1px solid var(--border-color);\r
   padding: 8px 12px;\r
   background: var(--bg-secondary);
 }
-.input-row[data-v-092ae455] {\r
+.input-row[data-v-ddd5447d] {\r
   display: flex;\r
   align-items: flex-start;\r
   gap: 6px;
 }
-.input-row .chat-input[data-v-092ae455] {\r
+.input-row .chat-input[data-v-ddd5447d] {\r
   flex: 1;
 }\r
 \r
 /* ===== @ 提及弹层 ===== */
-.cmd-panel[data-v-092ae455] {\r
+.cmd-panel[data-v-ddd5447d] {\r
   position: absolute;\r
   bottom: 56px;\r
   left: 12px;\r
@@ -380,7 +380,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   padding: 4px 0;\r
   font-size: 13px;
 }
-.cmd-item[data-v-092ae455] {\r
+.cmd-item[data-v-ddd5447d] {\r
   display: flex;\r
   flex-direction: row;\r
   align-items: center;\r
@@ -390,18 +390,18 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   color: var(--text-primary);\r
   white-space: nowrap;
 }
-.cmd-item[data-v-092ae455]:hover,\r
-.cmd-item.active[data-v-092ae455] {\r
+.cmd-item[data-v-ddd5447d]:hover,\r
+.cmd-item.active[data-v-ddd5447d] {\r
   background: var(--bg-hover, rgba(128, 128, 128, 0.12));
 }
-.cmd-name[data-v-092ae455] {\r
+.cmd-name[data-v-ddd5447d] {\r
   color: var(--accent-color);\r
   font-family: Consolas, Monaco, monospace;\r
   white-space: nowrap;\r
   overflow: hidden;\r
   text-overflow: ellipsis;
 }
-.cmd-desc[data-v-092ae455] {\r
+.cmd-desc[data-v-ddd5447d] {\r
   color: var(--text-secondary);\r
   font-size: 12px;\r
   white-space: nowrap;\r
@@ -410,11 +410,11 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   flex: 1;\r
   min-width: 0;
 }
-.cmd-empty[data-v-092ae455] {\r
+.cmd-empty[data-v-ddd5447d] {\r
   padding: 6px 12px;\r
   color: var(--text-secondary);
 }
-.at-panel[data-v-092ae455] {\r
+.at-panel[data-v-ddd5447d] {\r
   position: absolute;\r
   left: 12px;\r
   right: 12px;\r
@@ -427,7 +427,7 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);\r
   z-index: 20;
 }
-.at-item[data-v-092ae455] {\r
+.at-item[data-v-ddd5447d] {\r
   display: flex;\r
   align-items: center;\r
   gap: 8px;\r
@@ -436,23 +436,23 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   color: var(--text-primary);\r
   cursor: pointer;
 }
-.at-item.active[data-v-092ae455],\r
-.at-item[data-v-092ae455]:hover {\r
+.at-item.active[data-v-ddd5447d],\r
+.at-item[data-v-ddd5447d]:hover {\r
   background: var(--bg-hover, rgba(128, 128, 128, 0.12));
 }
-.at-status[data-v-092ae455] {\r
+.at-status[data-v-ddd5447d] {\r
   font-size: 13px;\r
   width: 18px;\r
   text-align: center;
 }
-.at-name[data-v-092ae455] {\r
+.at-name[data-v-ddd5447d] {\r
   font-weight: 500;
 }
-.at-region[data-v-092ae455] {\r
+.at-region[data-v-ddd5447d] {\r
   color: var(--text-secondary);\r
   font-size: 12px;
 }
-.at-empty[data-v-092ae455] {\r
+.at-empty[data-v-ddd5447d] {\r
   padding: 12px;\r
   text-align: center;\r
   color: var(--text-secondary);\r
@@ -463,46 +463,46 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
    摸鱼场景下彩色文字（系统提示、帮助 tip、行内 {color:xxx}、链接、色块标题）\r
    比正文本身更扎眼，路过一眼就能看到。极简模式下一律收敛到灰阶：\r
    只保留「正文 / 次要文字」两档，不出现任何强调色。 */
-.chat-panel.is-minimal[data-v-092ae455] {\r
+.chat-panel.is-minimal[data-v-ddd5447d] {\r
   --accent-color: var(--text-secondary);\r
   --success-color: var(--text-secondary);\r
   --danger-color: var(--text-secondary);
 }\r
 \r
 /* 系统消息块：去掉左侧彩色竖条与彩色标题 */
-.chat-panel.is-minimal .system-msg-box[data-v-092ae455],\r
-.chat-panel.is-minimal .system-msg-box.error[data-v-092ae455],\r
-.chat-panel.is-minimal .system-msg-box.notice[data-v-092ae455],\r
-.chat-panel.is-minimal .system-msg-box.info[data-v-092ae455] {\r
+.chat-panel.is-minimal .system-msg-box[data-v-ddd5447d],\r
+.chat-panel.is-minimal .system-msg-box.error[data-v-ddd5447d],\r
+.chat-panel.is-minimal .system-msg-box.notice[data-v-ddd5447d],\r
+.chat-panel.is-minimal .system-msg-box.info[data-v-ddd5447d] {\r
   border-left-color: var(--border-color);
 }
-.chat-panel.is-minimal .system-msg-box .system-msg-icon[data-v-092ae455],\r
-.chat-panel.is-minimal .system-msg-box .system-msg-title[data-v-092ae455],\r
-.chat-panel.is-minimal .system-msg-box .system-msg-text[data-v-092ae455] {\r
+.chat-panel.is-minimal .system-msg-box .system-msg-icon[data-v-ddd5447d],\r
+.chat-panel.is-minimal .system-msg-box .system-msg-title[data-v-ddd5447d],\r
+.chat-panel.is-minimal .system-msg-box .system-msg-text[data-v-ddd5447d] {\r
   color: var(--text-secondary);
 }\r
 \r
 /* Markdown 正文：标题、链接、行内彩色 span、引用块一律平掉颜色（图片不动） */
-.chat-panel.is-minimal[data-v-092ae455] .markdown-body {\r
+.chat-panel.is-minimal[data-v-ddd5447d] .markdown-body {\r
   color: var(--text-secondary);
 }
-.chat-panel.is-minimal[data-v-092ae455] .markdown-body *:not(img) {\r
+.chat-panel.is-minimal[data-v-ddd5447d] .markdown-body *:not(img) {\r
   color: inherit !important;\r
   text-shadow: none !important;
 }
-.chat-panel.is-minimal[data-v-092ae455] .markdown-body blockquote {\r
+.chat-panel.is-minimal[data-v-ddd5447d] .markdown-body blockquote {\r
   border-left-color: var(--border-color) !important;\r
   background: transparent !important;
 }\r
 \r
 /* 图片按钮：和样式选择器同一行，小一点不抢眼 */
-.img-btn[data-v-092ae455] {\r
+.img-btn[data-v-ddd5447d] {\r
   margin-right: 6px;\r
   flex: 0 0 auto;
 }\r
 \r
 /* 聊天区右键菜单 */
-.ctx-menu[data-v-092ae455] {\r
+.ctx-menu[data-v-ddd5447d] {\r
   position: fixed;\r
   z-index: 3000;\r
   min-width: 168px;\r
@@ -514,25 +514,37 @@ var __forAwait = (obj, it, method) => (it = obj[__knownSymbol("asyncIterator")])
   font-size: 13px;\r
   user-select: none;
 }
-.ctx-item[data-v-092ae455] {\r
+.ctx-item[data-v-ddd5447d] {\r
   padding: 7px 14px;\r
   cursor: pointer;\r
   color: var(--el-text-color-regular, #606266);\r
   white-space: nowrap;
 }
-.ctx-item[data-v-092ae455]:hover {\r
+.ctx-item[data-v-ddd5447d]:hover {\r
   background: var(--el-fill-color-light, #f5f7fa);\r
   color: var(--el-color-primary, #409eff);
 }
-.ctx-item.disabled[data-v-092ae455] {\r
+.ctx-item.disabled[data-v-ddd5447d] {\r
   color: var(--el-text-color-disabled, #c0c4cc);\r
   cursor: default;\r
   background: none;
 }
-.ctx-sep[data-v-092ae455] {\r
+.ctx-sep[data-v-ddd5447d] {\r
   height: 1px;\r
   margin: 4px 0;\r
   background: var(--el-border-color-lighter, #ebeef5);
+}\r
+\r
+/* 行内系统提示：纯文本一行，不占卡片空间 */
+.system-msg-inline[data-v-ddd5447d] {\r
+  padding: 2px 4px;\r
+  font-size: 12px;\r
+  line-height: 1.6;\r
+  color: var(--el-text-color-secondary, #909399);\r
+  word-break: break-all;
+}
+.system-msg-inline .sys-tag[data-v-ddd5447d] {\r
+  color: var(--el-color-info, #909399);
 }\r
 
 .tool-panel[data-v-6d47dd79] {\r
@@ -47870,7 +47882,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
   const _hoisted_19$3 = ["fill"];
   const _hoisted_20$3 = { transform: "translate(53.000000, 45.000000)" };
   const _hoisted_21$3 = ["fill", "xlink:href"];
-  const _hoisted_22$2 = ["fill", "mask"];
+  const _hoisted_22$3 = ["fill", "mask"];
   const _hoisted_23$2 = ["fill"];
   var img_empty_vue_vue_type_script_setup_true_lang_default = /* @__PURE__ */ defineComponent({
     name: "ImgEmpty",
@@ -47963,7 +47975,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
             mask: `url(#mask-4-${unref(id)})`,
             transform: "translate(12.000000, 9.000000) scale(-1, 1) translate(-12.000000, -9.000000) ",
             points: "7 0 24 0 20 18 7 16.5"
-          }, null, 8, _hoisted_22$2)]),
+          }, null, 8, _hoisted_22$3)]),
           createBaseVNode("polygon", {
             fill: `var(${unref(ns).cssVarBlockName("fill-color-2")})`,
             transform: "translate(66.000000, 51.500000) scale(-1, 1) translate(-66.000000, -51.500000) ",
@@ -96318,46 +96330,49 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
     lines.push("", pick(ENDS), "", "欢迎加入摸鱼技术交流群：754126966");
     return mdBreak(lines.join("\n"));
   }
-  const _hoisted_1$9 = { class: "system-msg-icon" };
-  const _hoisted_2$9 = { class: "system-msg-body" };
-  const _hoisted_3$9 = { class: "system-msg-title" };
-  const _hoisted_4$9 = { class: "system-msg-text" };
-  const _hoisted_5$9 = {
+  const _hoisted_1$9 = {
+    key: 0,
+    class: "system-msg-inline"
+  };
+  const _hoisted_2$9 = { class: "system-msg-icon" };
+  const _hoisted_3$9 = { class: "system-msg-body" };
+  const _hoisted_4$9 = { class: "system-msg-title" };
+  const _hoisted_5$9 = { class: "system-msg-text" };
+  const _hoisted_6$9 = {
     key: 0,
     class: "empty-hint"
   };
-  const _hoisted_6$9 = { class: "scroll-float" };
-  const _hoisted_7$8 = ["title"];
-  const _hoisted_8$7 = { class: "ui-mode-label" };
-  const _hoisted_9$7 = { class: "input-area" };
-  const _hoisted_10$6 = {
+  const _hoisted_7$8 = { class: "scroll-float" };
+  const _hoisted_8$7 = ["title"];
+  const _hoisted_9$7 = { class: "ui-mode-label" };
+  const _hoisted_10$6 = { class: "input-area" };
+  const _hoisted_11$6 = {
     key: 0,
     class: "at-panel"
   };
-  const _hoisted_11$6 = {
+  const _hoisted_12$4 = {
     key: 0,
     class: "at-empty"
   };
-  const _hoisted_12$4 = ["onMousedown", "onMouseenter"];
-  const _hoisted_13$4 = { class: "at-status" };
-  const _hoisted_14$3 = { class: "at-name" };
-  const _hoisted_15$3 = {
+  const _hoisted_13$4 = ["onMousedown", "onMouseenter"];
+  const _hoisted_14$3 = { class: "at-status" };
+  const _hoisted_15$3 = { class: "at-name" };
+  const _hoisted_16$3 = {
     key: 0,
     class: "at-region"
   };
-  const _hoisted_16$3 = {
+  const _hoisted_17$3 = {
     key: 1,
     class: "cmd-panel"
   };
-  const _hoisted_17$3 = {
+  const _hoisted_18$3 = {
     key: 0,
     class: "cmd-empty"
   };
-  const _hoisted_18$3 = ["onMousedown", "onMouseenter"];
-  const _hoisted_19$2 = { class: "cmd-name" };
-  const _hoisted_20$2 = { class: "cmd-desc" };
-  const _hoisted_21$2 = { class: "input-row" };
-  const IMAGE_MAX_BYTES = 1 << 20;
+  const _hoisted_19$2 = ["onMousedown", "onMouseenter"];
+  const _hoisted_20$2 = { class: "cmd-name" };
+  const _hoisted_21$2 = { class: "cmd-desc" };
+  const _hoisted_22$2 = { class: "input-row" };
   const _sfc_main$9 = {
     __name: "ChatPanel",
     setup(__props) {
@@ -96379,6 +96394,11 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
       const fileInputRef = /* @__PURE__ */ ref(null);
       const uploading = /* @__PURE__ */ ref(false);
       const ctxMenu = /* @__PURE__ */ ref({ show: false, x: 0, y: 0, link: "", selection: "" });
+      const sysStyle = /* @__PURE__ */ ref("block");
+      try {
+        sysStyle.value = localStorage.getItem("xechat_sys_msg_style") || "block";
+      } catch (e) {
+      }
       const histIndex = /* @__PURE__ */ ref(-1);
       const histDraft = /* @__PURE__ */ ref("");
       const showTopBtn = /* @__PURE__ */ ref(false);
@@ -97137,31 +97157,60 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
           }
         }
       }
+      function compressImage(file, maxEdge, quality) {
+        return new Promise(function(resolve2, reject) {
+          const img = new Image();
+          const url = URL.createObjectURL(file);
+          img.onload = function() {
+            URL.revokeObjectURL(url);
+            let w2 = img.naturalWidth;
+            let h2 = img.naturalHeight;
+            const scale = Math.min(1, maxEdge / Math.max(w2, h2));
+            w2 = Math.max(1, Math.round(w2 * scale));
+            h2 = Math.max(1, Math.round(h2 * scale));
+            const canvas = document.createElement("canvas");
+            canvas.width = w2;
+            canvas.height = h2;
+            canvas.getContext("2d").drawImage(img, 0, 0, w2, h2);
+            canvas.toBlob(function(blob) {
+              if (!blob) return reject(new Error("压缩失败"));
+              const reader = new FileReader();
+              reader.onload = function() {
+                resolve2({ base64: String(reader.result).split(",")[1], type: "jpg", size: blob.size });
+              };
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            }, "image/jpeg", quality);
+          };
+          img.onerror = function() {
+            URL.revokeObjectURL(url);
+            reject(new Error("图片解码失败"));
+          };
+          img.src = url;
+        });
+      }
       function uploadImageFile(file) {
-        const type = (file.type || "").split("/")[1] || "png";
-        if (["png", "jpeg", "jpg", "gif", "bmp"].indexOf(type) < 0) {
-          ElMessage.warning("只支持 png / jpg / gif / bmp 图片");
+        const type0 = (file.type || "").split("/")[1] || "png";
+        if (["png", "jpeg", "jpg", "gif", "bmp", "webp"].indexOf(type0) < 0) {
+          console.warn("[xechat] 不支持的图片类型:", type0);
           return;
         }
-        if (file.size > IMAGE_MAX_BYTES) {
-          ElMessage.warning("图片不能超过 " + Math.round(IMAGE_MAX_BYTES / 1024) + " KB");
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = function() {
-          const dataUrl = String(reader.result || "");
-          const base64 = dataUrl.substring(dataUrl.indexOf(",") + 1);
-          uploading.value = true;
-          const ok = transport.uploadImage(base64, type === "jpeg" ? "jpg" : type);
+        uploading.value = true;
+        compressImage(file, 2048, 0.85).then(function(out) {
+          if (out.size > 8 * 1024 * 1024) {
+            console.warn("[xechat] 压缩后仍超过上限:", out.size);
+            uploading.value = false;
+            return;
+          }
+          const ok = transport.uploadImage(out.base64, out.type);
           setTimeout(function() {
             uploading.value = false;
           }, ok ? 4e3 : 0);
-          if (!ok) ElMessage.warning("当前端不支持发送图片");
-        };
-        reader.onerror = function() {
-          ElMessage.error("读取图片失败");
-        };
-        reader.readAsDataURL(file);
+          if (!ok) console.warn("[xechat] 当前端不支持发送图片");
+        }).catch(function(e) {
+          console.warn("[xechat] 图片处理失败:", e && e.message);
+          uploading.value = false;
+        });
       }
       function onContextMenu(e) {
         const sel = window.getSelection ? String(window.getSelection() || "") : "";
@@ -97203,6 +97252,27 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
         ctxMenu.value.show = false;
         if (!url) return;
         window.open(url.indexOf("http") === 0 ? url : "https://" + url, "_blank");
+      }
+      function lastUsername() {
+        try {
+          const raw = localStorage.getItem("xechat_settings_v1");
+          if (raw) {
+            const v2 = JSON.parse(raw);
+            if (v2 && v2.username) return String(v2.username);
+          }
+        } catch (e) {
+        }
+        return localStorage.getItem("xechat_last_username") || "";
+      }
+      function ctxQuickLogin() {
+        ctxMenu.value.show = false;
+        const name = lastUsername();
+        if (!name) {
+          console.warn("[xechat] 没有可用的历史用户名，请先登录一次");
+          return;
+        }
+        inputText.value = "#login " + name + " -s 0";
+        send();
       }
       function ctxCommand(cmd) {
         ctxMenu.value.show = false;
@@ -97303,6 +97373,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
         });
       });
       return (_ctx, _cache) => {
+        const _component_font = resolveComponent("font");
         const _component_el_switch = resolveComponent("el-switch");
         const _component_Top = resolveComponent("Top");
         const _component_el_icon = resolveComponent("el-icon");
@@ -97325,37 +97396,45 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
                 key: idx,
                 class: "message-item"
               }, [
-                msg.type === "system" ? (openBlock(), createElementBlock("div", {
-                  key: 0,
+                msg.type === "system" && sysStyle.value === "inline" ? (openBlock(), createElementBlock("div", _hoisted_1$9, [
+                  createVNode(_component_font, { class: "sys-tag" }, {
+                    default: withCtx(() => [..._cache[6] || (_cache[6] = [
+                      createTextVNode("【系统提示】", -1)
+                    ])]),
+                    _: 1
+                  }),
+                  createTextVNode(" " + toDisplayString(stripHtml(msg.text)), 1)
+                ])) : msg.type === "system" ? (openBlock(), createElementBlock("div", {
+                  key: 1,
                   class: normalizeClass(["system-msg-box", classifySystemMsg(msg.text)])
                 }, [
-                  createBaseVNode("span", _hoisted_1$9, toDisplayString(systemMsgIcon(msg.text)), 1),
-                  createBaseVNode("div", _hoisted_2$9, [
-                    createBaseVNode("div", _hoisted_3$9, toDisplayString(systemMsgTitle(msg.text)), 1),
-                    createBaseVNode("div", _hoisted_4$9, toDisplayString(stripHtml(msg.text)), 1)
+                  createBaseVNode("span", _hoisted_2$9, toDisplayString(systemMsgIcon(msg.text)), 1),
+                  createBaseVNode("div", _hoisted_3$9, [
+                    createBaseVNode("div", _hoisted_4$9, toDisplayString(systemMsgTitle(msg.text)), 1),
+                    createBaseVNode("div", _hoisted_5$9, toDisplayString(stripHtml(msg.text)), 1)
                   ])
                 ], 2)) : (openBlock(), createBlock(MarkdownMessage, {
-                  key: 1,
+                  key: 2,
                   content: msg.text,
                   "msg-type": msg.msgType,
                   "file-name": msg.fileName
                 }, null, 8, ["content", "msg-type", "file-name"]))
               ]);
             }), 128)),
-            unref(chatStore).isEmpty ? (openBlock(), createElementBlock("div", _hoisted_5$9, " 暂无消息 ")) : createCommentVNode("", true)
+            unref(chatStore).isEmpty ? (openBlock(), createElementBlock("div", _hoisted_6$9, " 暂无消息 ")) : createCommentVNode("", true)
           ], 544),
-          createBaseVNode("div", _hoisted_6$9, [
+          createBaseVNode("div", _hoisted_7$8, [
             createBaseVNode("div", {
               class: normalizeClass(["ui-mode-switch", { "is-minimal": minimalMode.value }]),
               title: minimalMode.value ? "当前极简模式，点击切回普通模式（#ui 0）" : "当前普通模式，点击切到极简模式（#ui 1）"
             }, [
-              createBaseVNode("span", _hoisted_8$7, toDisplayString(minimalMode.value ? "极简" : "普通"), 1),
+              createBaseVNode("span", _hoisted_9$7, toDisplayString(minimalMode.value ? "极简" : "普通"), 1),
               createVNode(_component_el_switch, {
                 "model-value": minimalMode.value,
                 size: "small",
                 onChange: onToggleUiMode
               }, null, 8, ["model-value"])
-            ], 10, _hoisted_7$8),
+            ], 10, _hoisted_8$7),
             showTopBtn.value ? (openBlock(), createBlock(_component_el_button, {
               key: 0,
               class: "float-btn",
@@ -97393,9 +97472,9 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
               _: 1
             })) : createCommentVNode("", true)
           ]),
-          createBaseVNode("div", _hoisted_9$7, [
-            atPanelVisible.value ? (openBlock(), createElementBlock("div", _hoisted_10$6, [
-              atFilteredUsers.value.length === 0 ? (openBlock(), createElementBlock("div", _hoisted_11$6, "无匹配用户")) : createCommentVNode("", true),
+          createBaseVNode("div", _hoisted_10$6, [
+            atPanelVisible.value ? (openBlock(), createElementBlock("div", _hoisted_11$6, [
+              atFilteredUsers.value.length === 0 ? (openBlock(), createElementBlock("div", _hoisted_12$4, "无匹配用户")) : createCommentVNode("", true),
               (openBlock(true), createElementBlock(Fragment, null, renderList(atFilteredUsers.value, (u2, i) => {
                 return openBlock(), createElementBlock("div", {
                   key: u2.username,
@@ -97403,14 +97482,14 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
                   onMousedown: withModifiers(($event) => selectAtUser(u2), ["prevent"]),
                   onMouseenter: ($event) => atActiveIndex.value = i
                 }, [
-                  createBaseVNode("span", _hoisted_13$4, toDisplayString(atStatusIcon(u2.status)), 1),
-                  createBaseVNode("span", _hoisted_14$3, toDisplayString(u2.username), 1),
-                  u2.shortRegion ? (openBlock(), createElementBlock("span", _hoisted_15$3, "[" + toDisplayString(u2.shortRegion) + "]", 1)) : createCommentVNode("", true)
-                ], 42, _hoisted_12$4);
+                  createBaseVNode("span", _hoisted_14$3, toDisplayString(atStatusIcon(u2.status)), 1),
+                  createBaseVNode("span", _hoisted_15$3, toDisplayString(u2.username), 1),
+                  u2.shortRegion ? (openBlock(), createElementBlock("span", _hoisted_16$3, "[" + toDisplayString(u2.shortRegion) + "]", 1)) : createCommentVNode("", true)
+                ], 42, _hoisted_13$4);
               }), 128))
             ])) : createCommentVNode("", true),
-            cmdPanelVisible.value ? (openBlock(), createElementBlock("div", _hoisted_16$3, [
-              cmdFilteredCommands.value.length === 0 ? (openBlock(), createElementBlock("div", _hoisted_17$3, "无匹配命令")) : createCommentVNode("", true),
+            cmdPanelVisible.value ? (openBlock(), createElementBlock("div", _hoisted_17$3, [
+              cmdFilteredCommands.value.length === 0 ? (openBlock(), createElementBlock("div", _hoisted_18$3, "无匹配命令")) : createCommentVNode("", true),
               (openBlock(true), createElementBlock(Fragment, null, renderList(cmdFilteredCommands.value, (c2, i) => {
                 return openBlock(), createElementBlock("div", {
                   key: c2.name,
@@ -97418,12 +97497,12 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
                   onMousedown: withModifiers(($event) => selectCmdCommand(c2), ["prevent"]),
                   onMouseenter: ($event) => cmdActiveIndex.value = i
                 }, [
-                  createBaseVNode("span", _hoisted_19$2, toDisplayString(c2.full), 1),
-                  createBaseVNode("span", _hoisted_20$2, toDisplayString(c2.desc), 1)
-                ], 42, _hoisted_18$3);
+                  createBaseVNode("span", _hoisted_20$2, toDisplayString(c2.full), 1),
+                  createBaseVNode("span", _hoisted_21$2, toDisplayString(c2.desc), 1)
+                ], 42, _hoisted_19$2);
               }), 128))
             ])) : createCommentVNode("", true),
-            createBaseVNode("div", _hoisted_21$2, [
+            createBaseVNode("div", _hoisted_22$2, [
               createVNode(StyleSelector, { onSelect: onStyleSelect }),
               createVNode(_component_el_tooltip, {
                 content: "发送图片（也可以直接 Ctrl+V 粘贴截图）",
@@ -97482,7 +97561,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
             key: 0,
             class: "ctx-menu",
             style: normalizeStyle({ left: ctxMenu.value.x + "px", top: ctxMenu.value.y + "px" }),
-            onClick: _cache[4] || (_cache[4] = withModifiers(() => {
+            onClick: _cache[5] || (_cache[5] = withModifiers(() => {
             }, ["stop"]))
           }, [
             createBaseVNode("div", {
@@ -97493,25 +97572,34 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
               class: normalizeClass(["ctx-item", { disabled: !ctxMenu.value.link }]),
               onClick: ctxOpenLink
             }, "打开链接", 2),
-            _cache[5] || (_cache[5] = createBaseVNode("div", { class: "ctx-sep" }, null, -1)),
+            _cache[7] || (_cache[7] = createBaseVNode("div", { class: "ctx-sep" }, null, -1)),
             createBaseVNode("div", {
               class: "ctx-item",
-              onClick: _cache[1] || (_cache[1] = ($event) => ctxCommand("#help"))
+              onClick: _cache[1] || (_cache[1] = ($event) => ctxCommand("#showServer -c"))
+            }, "获取服务器列表（#showServer -c）"),
+            createBaseVNode("div", {
+              class: "ctx-item",
+              onClick: ctxQuickLogin
+            }, "快捷登录（#login 用户名 -s 0）"),
+            _cache[8] || (_cache[8] = createBaseVNode("div", { class: "ctx-sep" }, null, -1)),
+            createBaseVNode("div", {
+              class: "ctx-item",
+              onClick: _cache[2] || (_cache[2] = ($event) => ctxCommand("#help"))
             }, "需要帮助（#help）"),
             createBaseVNode("div", {
               class: "ctx-item",
-              onClick: _cache[2] || (_cache[2] = ($event) => ctxCommand("#clean"))
+              onClick: _cache[3] || (_cache[3] = ($event) => ctxCommand("#clean"))
             }, "清屏（#clean）"),
             createBaseVNode("div", {
               class: "ctx-item",
-              onClick: _cache[3] || (_cache[3] = ($event) => ctxCommand("#exit"))
+              onClick: _cache[4] || (_cache[4] = ($event) => ctxCommand("#exit"))
             }, "退出鱼塘（#exit）")
           ], 4)) : createCommentVNode("", true)
         ], 2);
       };
     }
   };
-  const ChatPanel = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-092ae455"]]);
+  const ChatPanel = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-ddd5447d"]]);
   const _hoisted_1$8 = { class: "tool-panel" };
   const _hoisted_2$8 = { class: "tool-grid" };
   const _hoisted_3$8 = ["onClick"];
