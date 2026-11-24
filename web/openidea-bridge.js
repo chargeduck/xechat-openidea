@@ -18,7 +18,7 @@
   }
 
   var seq = 1
-  var VERSION = '0.3.0'
+  var VERSION = '0.3.1'
 
   function post(payload) {
     try {

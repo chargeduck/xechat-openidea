@@ -67,6 +67,7 @@ fn post(value: Value) {
 /// 写一条到 IDE 日志（`<IDE 数据目录>/logs/openidea.<日期>.log`，所有用户都适用）。
 /// 网页视图里看不到控制台，这是排查桥接问题的主要出口。
 ///
+/// 只写连接 id、帧类型/计数/字节数、错误等**元信息**，不写消息正文。
 /// 同时攒进内存缓冲；若用户打开了设置项 `logFile`，再由 [`flush_log`] 落一份到
 /// **当前项目根**下的 `.xechat/logs/bridge.log`（路径相对项目，不写死绝对路径）。
 fn note(level: LogLevel, msg: &str) {
@@ -80,6 +81,22 @@ fn note(level: LogLevel, msg: &str) {
     DIRTY.store(true, Ordering::Relaxed);
 }
 
+/// 帧元信息：只记「动作名 / 字节数」，**绝不记消息正文**。
+///
+/// 聊天内容属于用户与他人之间的对话，写进 IDE 日志或项目日志都会被误分享
+/// （贴日志、提交仓库）。所以这里只保留排查必需的元数据。
+fn frame_kind(text: &str) -> Option<&'static str> {
+    // 协议里的 `action` 只有固定几个取值，属于帧类型，不是消息内容
+    let value: Value = serde_json::from_str(text).ok()?;
+    match value.get("action").and_then(Value::as_str)? {
+        "LOGIN" => Some("LOGIN"),
+        "HEARTBEAT" => Some("HEARTBEAT"),
+        "CHAT" => Some("CHAT"),
+        "REACT" => Some("REACT"),
+        _ => Some("OTHER"),
+    }
+}
+
 /// 每帧都追加会刷屏，只对前几帧和每第 N 帧留记录
 fn note_frame(conn: u64, text: &str) {
     let n = {
@@ -89,8 +106,8 @@ fn note_frame(conn: u64, text: &str) {
         *c
     };
     if n <= 3 || n % 25 == 0 {
-        let preview: String = text.chars().take(160).collect();
-        note(LogLevel::Info, &format!("recv#{conn} 第{n}帧: {preview}"));
+        let kind = frame_kind(text).unwrap_or("BINARY?");
+        note(LogLevel::Info, &format!("recv#{conn} 第{n}帧 {kind} {} 字节", text.len()));
     }
 }
 
@@ -204,7 +221,7 @@ fn pump(conn: u64) {
     }
 }
 
-/// 发帧同理：前 5 帧和每第 10 帧留记录（LOGIN 就在前几帧里）
+/// 发帧同理：前 5 帧和每第 10 帧留记录（LOGIN 就在前几帧里），同样只记元信息
 fn note_send(conn: u64, data: &str) {
     let n = {
         let mut counts = SENDS.lock().unwrap_or_else(|e| e.into_inner());
@@ -213,8 +230,8 @@ fn note_send(conn: u64, data: &str) {
         *c
     };
     if n <= 5 || n % 10 == 0 {
-        let preview: String = data.chars().take(160).collect();
-        note(LogLevel::Info, &format!("send#{conn} 第{n}帧: {preview}"));
+        let kind = frame_kind(data).unwrap_or("BINARY?");
+        note(LogLevel::Info, &format!("send#{conn} 第{n}帧 {kind} {} 字节", data.len()));
     }
 }
 
