@@ -5,6 +5,9 @@
  * 这里把 WebSocket / fetch / XMLHttpRequest 换成 postMessage 通道，由插件用
  * host::WebSocket（WSS）和 host::fetch（HTTPS）代跑。
  *
+ * **每条连接都有编号（conn）**：前端会同时探测多个鱼塘，只用一个全局句柄会互相覆盖，
+ * 帧没有归属 → 页面永远「登录中」。所以连接表、监听器、收发都要按 conn 区分。
+ *
  * 必须在 xechat-web 的应用脚本之前加载（放 <head> 里、defer 之前）。
  */
 (function () {
@@ -15,34 +18,28 @@
   }
 
   var seq = 1
-  // ---- 诊断条：把桥接层的关键事件直接画在页面上，方便不开控制台也能定位 ----
-  var diag = { open: 0, sent: 0, recv: 0, err: '', last: '' }
-  function diagRender() {
-    try {
-      var el = document.getElementById('__xechat_diag')
-      if (!el) {
-        el = document.createElement('div')
-        el.id = '__xechat_diag'
-        el.style.cssText = 'position:fixed;right:6px;bottom:6px;z-index:2147483647;font:11px/1.5 Consolas,monospace;' +
-          'background:rgba(0,0,0,.72);color:#8ef;padding:4px 8px;border-radius:6px;pointer-events:none;' +
-          'max-width:60vw;white-space:pre-wrap;opacity:.85'
-        document.body.appendChild(el)
-      }
-      el.textContent = 'bridge 0.1.5  open=' + diag.open + ' sent=' + diag.sent + ' recv=' + diag.recv +
-        (diag.err ? '\nerr=' + diag.err : '') + (diag.last ? '\nlast=' + diag.last : '')
-    } catch (e) {}
-  }
-  function diagSet(err) {
-    if (err) diag.err = String(err).slice(0, 120)
-    diagRender()
-  }
-  var pending = new Map()
-  var wsListeners = { open: [], message: [], close: [], error: [] }
-  var ws = null
+  var VERSION = '0.3.0'
 
   function post(payload) {
-    api.postMessage(JSON.stringify(payload))
+    try {
+      api.postMessage(JSON.stringify(payload))
+    } catch (e) {}
   }
+
+  // 关键事件转进 IDE 日志：网页视图没有控制台，出问题时靠它定位
+  function blog(level, msg) {
+    try {
+      post({ op: 'log', level: level, msg: String(msg).slice(0, 400) })
+    } catch (e) {}
+  }
+
+  // 插件侧日志用本地时间：把本机时区偏移告诉 Rust（分钟，东八区=480）
+  post({ op: 'tz', offset: -new Date().getTimezoneOffset() })
+
+  var pending = new Map()
+
+  // conn -> { open: [], message: [], close: [], error: [] }
+  var conns = new Map()
 
   function call(op) {
     return new Promise(function (resolve, reject) {
@@ -82,17 +79,23 @@
     if (msg && msg.id != null && pending.has(msg.id)) {
       var p = pending.get(msg.id)
       pending.delete(msg.id)
-      if (msg.ok) {
-        p.resolve(msg)
-      } else {
-        p.reject(new Error(msg.error || '插件返回失败'))
-      }
+      if (msg.ok) p.resolve(msg)
+      else p.reject(new Error(msg.error || '插件返回失败'))
       return
     }
-    if (msg && msg.event) {
-      ;(wsListeners[msg.event.replace('ws.', '')] || []).forEach(function (fn) {
-        try { fn(msg) } catch (e) {}
-      })
+    if (!msg || !msg.event) return
+    if (msg.event === 'bridge.error') {
+      blog('warn', 'bridge.error: ' + msg.error)
+      return
+    }
+    var kind = String(msg.event).replace('ws.', '')
+    var set = msg.conn != null ? conns.get(msg.conn) : null
+    if (!set || !set[kind]) {
+      blog('warn', msg.event + ' 无主 conn=' + msg.conn)
+      return
+    }
+    for (var i = 0; i < set[kind].length; i++) {
+      try { set[kind][i](msg) } catch (e) {}
     }
   })
 
@@ -149,7 +152,6 @@
   }
 
   // ===== fetch =====
-  var nativeFetch = window.fetch ? window.fetch.bind(window) : null
   window.fetch = function (input, init) {
     init = init || {}
     var url = typeof input === 'string' ? input : input && input.url
@@ -279,7 +281,7 @@
   }
   window.XMLHttpRequest = ShimXHR
 
-  // ===== WebSocket =====
+  // ===== WebSocket（每条连接独立编号与监听器）=====
   function ShimWebSocket(url, protocols) {
     var self = this
     this.url = url
@@ -290,51 +292,43 @@
     this.onclose = null
     this.onerror = null
     this._queue = []
-    ws = this
+    this._conn = null
+    this._set = { open: [], message: [], close: [], error: [] }
 
-    wsListeners.open.length = 0
-    wsListeners.message.length = 0
-    wsListeners.close.length = 0
-    wsListeners.error.length = 0
-
-    wsListeners.open.push(function () {
+    this._set.open.push(function () {
       self.readyState = 1
       if (self.onopen) self.onopen({ type: 'open' })
       while (self._queue.length) {
-        var item = self._queue.shift()
-        call({ op: 'ws.send', data: item }).catch(function (e) {
-          if (self.onerror) self.onerror({ type: 'error', message: e.message })
-        })
+        self._sendNow(self._queue.shift())
       }
     })
-    wsListeners.message.push(function (msg) {
-      diag.recv++
-      diag.last = 'recv ' + String(msg.data || '').slice(0, 60)
-      diagRender()
+    this._set.message.push(function (msg) {
       if (self.onmessage) self.onmessage({ type: 'message', data: msg.data })
     })
-    wsListeners.close.push(function () {
+    this._set.close.push(function () {
       self.readyState = 3
-      diagSet('closed')
+      blog('warn', 'ws 对端关闭 #' + self._conn)
       if (self.onclose) self.onclose({ type: 'close', wasClean: true })
     })
-    wsListeners.error.push(function (msg) {
+    this._set.error.push(function (msg) {
       self.readyState = 3
+      blog('error', 'ws error #' + self._conn + ': ' + msg.error)
       if (self.onerror) self.onerror({ type: 'error', message: msg.error })
     })
 
     call({ op: 'ws.connect', url: routeWs(url), headers: {} })
-      .then(function () {
-        // 握手成功：宿主不再额外发事件，这里直接把 open 派发出去，
-        // 否则前端永远等不到 onopen（表现为「10s 内未完成握手」超时）。
+      .then(function (res) {
+        self._conn = res.conn
+        conns.set(res.conn, self._set)
         self.readyState = 1
-        diag.open = 1
-        diagRender()
-        wsListeners.open.forEach(function (fn) { try { fn({}) } catch (e) {} })
+        blog('info', 'ws 已连接 #' + res.conn + ': ' + routeWs(url))
+        for (var i = 0; i < self._set.open.length; i++) {
+          try { self._set.open[i]({}) } catch (e) {}
+        }
       })
       .catch(function (e) {
         self.readyState = 3
-        diagSet('connect failed: ' + e.message)
+        blog('error', 'ws 连接失败: ' + routeWs(url) + ' -> ' + e.message)
         if (self.onerror) self.onerror({ type: 'error', message: e.message })
         if (self.onclose) self.onclose({ type: 'close', wasClean: false })
       })
@@ -344,30 +338,37 @@
   ShimWebSocket.CLOSING = 2
   ShimWebSocket.CLOSED = 3
 
+  ShimWebSocket.prototype._sendNow = function (data) {
+    var self = this
+    call({ op: 'ws.send', conn: this._conn, data: String(data) }).catch(function (e) {
+      blog('error', 'ws 发送失败 #' + self._conn + ': ' + e.message)
+      if (self.onerror) self.onerror({ type: 'error', message: e.message })
+    })
+  }
+
   ShimWebSocket.prototype.send = function (data) {
     if (this.readyState === 1) {
-      diag.sent++
-      diag.last = 'send ' + String(data).slice(0, 60)
-      diagRender()
-      call({ op: 'ws.send', data: String(data) }).catch(function (e) {
-        diagSet('send failed: ' + e.message)
-        if (this.onerror) this.onerror({ type: 'error', message: e.message })
-      })
+      this._sendNow(data)
     } else if (this.readyState === 0) {
       this._queue.push(String(data))
     }
   }
   ShimWebSocket.prototype.close = function () {
     this.readyState = 2
-    call({ op: 'ws.close' }).catch(function () {})
+    var conn = this._conn
+    if (conn != null) {
+      conns.delete(conn)
+      call({ op: 'ws.close', conn: conn }).catch(function () {})
+    }
   }
   ShimWebSocket.prototype.addEventListener = function (type, fn) {
     var key = type.replace('ws.', '')
-    if (wsListeners[key]) wsListeners[key].push(function (msg) { fn(msg) })
+    if (this._set[key]) this._set[key].push(function (msg) { fn(msg) })
   }
   ShimWebSocket.prototype.removeEventListener = function () {}
 
   window.WebSocket = ShimWebSocket
 
-  console.log('[xechat-openidea] bridge 0.1.6 ready (relay: ' + RELAY_ORIGIN + RELAY_BASE + ')')
+  console.log('[xechat] bridge ' + VERSION + ' ready (relay: ' + RELAY_ORIGIN + RELAY_BASE + ')')
+  blog('info', 'bridge ' + VERSION + ' ready')
 })()

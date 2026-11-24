@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "xechat",
+  "properties": {
+    "logFile": {
+      "type": "boolean",
+      "title": "把桥接日志写入当前项目",
+      "description": "开启后，连接/收发帧的诊断日志会写到当前打开项目的 .xechat/logs/bridge.log（相对项目根，随项目走）。关闭时只写 IDE 自己的日志。",
+      "default": false
+    }
+  }
+}

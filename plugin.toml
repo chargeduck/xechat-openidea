@@ -1,11 +1,11 @@
 id = "xechat.openidea"
-name = "XEChat Moyu"
-version = "0.1.6"
+name = "xechat"
+version = "0.3.0"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.1.6 — 修复连接句柄随插件实例重建丢失（发送报「尚未连接」）的问题：句柄改为进程级静态存储。"
+change-notes = "0.3.0 — 插件/工具窗改名 xechat；日志改用本地时间；移除右下角常驻诊断条与 Ctrl+Shift+D 面板；日志落盘改为可选设置项，路径跟随当前项目（.xechat/logs/bridge.log）。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
@@ -14,18 +14,21 @@ activation = ["on-view:chat", "on-event:websocket-ready"]
 
 [capabilities]
 required = ["events", "net:dld.lesscoding.net", "net:xechat.lesscoding.net"]
-optional = ["net:*.lesscoding.net", "net:ask", "clipboard"]
+optional = ["net:*.lesscoding.net", "net:ask", "clipboard", "net:127.0.0.1", "net:localhost", "project.read", "project.write"]
+
+[contributes.settings]
+schema = "settings.schema.json"
 
 [[contributes.views]]
 id = "chat"
-title = "Moyu"
+title = "xechat"
 icon = "icons/xechat.svg"
 location = "right"
 web = "web/index.html"
 
 [[contributes.commands]]
 id = "open"
-title = "XEChat: Open Moyu Chat"
+title = "xechat: Open Chat"
 category = "XEChat"
 icon = "icons/xechat.svg"
 
