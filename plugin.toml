@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "xechat"
-version = "0.3.3"
+version = "0.3.4"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.3.3 — 同步 xechat-web：管理员昵称后加 ☆；↑ 历史只保留 # 命令；聊天区右键菜单（复制/打开链接/常用命令）；支持发送图片（按钮或 Ctrl+V 粘贴，REACT/UPLOAD）。"
+change-notes = "0.3.4 — 系统提示中的 ConsoleTable 文本表格渲染为 Markdown 表格；新增「中继连接」开关（跨塘走 xechat 站点中继，连 64KB 单帧的官方塘也能发大图）；修复发图报「请先登录」（REACT 帧携带服务端分配的 uid）；xechat-download 链接点击交由宿主保存；图片压缩改用 createImageBitmap，规避 webview 的 blob: CSP 限制。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"

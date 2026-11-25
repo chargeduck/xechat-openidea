@@ -330,7 +330,7 @@ dependencies = [
 
 [[package]]
 name = "xechat-openidea"
-version = "0.3.3"
+version = "0.3.4"
 dependencies = [
  "base64",
  "openidea-plugin",
