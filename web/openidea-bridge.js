@@ -134,21 +134,60 @@
    *   ws://<pond>:33859/xechat  →  wss://xechat.lesscoding.net/xechat/relay/<pond>/33859
    * 中继端有白名单（未登记的塘会 403），不是开放代理。
    */
-  var RELAY_ORIGIN = 'wss://xechat.lesscoding.net'
+  var RELAY_ORIGIN_DEFAULT = 'wss://xechat.lesscoding.net'
   var RELAY_BASE = '/xechat/relay/'
 
-  function routeWs(url) {
+  /**
+   * 用户是否希望经中继：localStorage['xechat_ws_relay_base']
+   *   未设置 → 默认开启（用默认中继站点）
+   *   ''     → 关闭中继，直连目标
+   *   其他值 → 自定义中继站点
+   */
+  function relayOrigin() {
+    try {
+      var v = localStorage.getItem('xechat_ws_relay_base')
+      if (v === null || v === undefined) return RELAY_ORIGIN_DEFAULT
+      return v
+    } catch (e) {
+      return RELAY_ORIGIN_DEFAULT
+    }
+  }
+
+  /**
+   * 解析最终连接地址。
+   * @returns {{url: string, error: (string|null)}}
+   *
+   * 开关必须贯穿到这里：关闭后不能再把普通 ws:// 目标静默改写成中继地址，
+   * 否则用户的隐私选择会被桥接层覆盖（见 PR 复核意见）。
+   * 关闭时若目标是宿主无法直连的「非回环明文 ws://」，直接给出明确错误，
+   * 而不是偷偷回落到中继。
+   */
+  function routeWsResolve(url) {
     try {
       var u = new URL(url, location.href)
       var loopback = ['localhost', '127.0.0.1', '::1', '[::1]'].indexOf(u.hostname) >= 0
-      if (loopback) return u.toString()
-      // 已经是 wss 的（目标塘自己有 TLS）就直接用
-      if (u.protocol === 'wss:') return u.toString()
+      if (loopback) return { url: u.toString(), error: null }
+      // 目标自带 TLS：无论如何都直连
+      if (u.protocol === 'wss:') return { url: u.toString(), error: null }
+
+      var origin = relayOrigin()
+      if (!origin) {
+        return {
+          url: u.toString(),
+          error: '已关闭「中继连接」，但 OpenIDEA 宿主的 WebSocket 只允许非回环地址使用 wss://。' +
+            '当前目标 ' + u.host + ' 是明文 ws://，无法直连。请改用带 TLS 的 wss:// 地址，或在设置中重新开启中继。'
+        }
+      }
       var port = u.port || '80'
-      return RELAY_ORIGIN + RELAY_BASE + encodeURIComponent(u.hostname) + '/' + port
+      return { url: origin + RELAY_BASE + encodeURIComponent(u.hostname) + '/' + port, error: null }
     } catch (e) {
-      return url
+      return { url: url, error: null }
     }
+  }
+
+  /** 兼容旧调用点：只取地址 */
+  function routeWs(url) {
+    return routeWsResolve(url).url
   }
 
   // ===== fetch =====
@@ -316,19 +355,32 @@
       if (self.onerror) self.onerror({ type: 'error', message: msg.error })
     })
 
-    call({ op: 'ws.connect', url: routeWs(url), headers: {} })
+    var routed = routeWsResolve(url)
+    if (routed.error) {
+      // 明确提示，不静默回落中继
+      self.readyState = 3
+      blog('error', routed.error)
+      try { window.dispatchEvent(new CustomEvent('xechat:ws-route-error', { detail: routed.error })) } catch (e) {}
+      setTimeout(function () {
+        if (self.onerror) self.onerror({ type: 'error', message: routed.error })
+        if (self.onclose) self.onclose({ type: 'close', wasClean: false })
+      }, 0)
+      return
+    }
+
+    call({ op: 'ws.connect', url: routed.url, headers: {} })
       .then(function (res) {
         self._conn = res.conn
         conns.set(res.conn, self._set)
         self.readyState = 1
-        blog('info', 'ws 已连接 #' + res.conn + ': ' + routeWs(url))
+        blog('info', 'ws 已连接 #' + res.conn + ': ' + routed.url)
         for (var i = 0; i < self._set.open.length; i++) {
           try { self._set.open[i]({}) } catch (e) {}
         }
       })
       .catch(function (e) {
         self.readyState = 3
-        blog('error', 'ws 连接失败: ' + routeWs(url) + ' -> ' + e.message)
+        blog('error', 'ws 连接失败: ' + routed.url + ' -> ' + e.message)
         if (self.onerror) self.onerror({ type: 'error', message: e.message })
         if (self.onclose) self.onclose({ type: 'close', wasClean: false })
       })
