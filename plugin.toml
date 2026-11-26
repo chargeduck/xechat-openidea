@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "xechat"
-version = "0.4.0"
+version = "0.4.1"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.4.0 — 新增摸鱼阅读：工具页导入 txt / epub，自动切章、按显示宽度分页、进度本地保存（IndexedDB）；底部阅读条显示当前行与进度，Ctrl+↑/↓ 翻行、Shift+↑/↓ 翻页；支持自动阅读（毫秒间隔，默认 1500ms）、空行跳过、书库导出 / 导入。0.3.4 的中继开关修复一并包含。"
+change-notes = "0.4.1 — 修 openIDEA 下图片消息无法查看：沙箱禁止 <img> 直接加载外链，改为经宿主 fetch 取字节后转 data: URL 内联显示。0.4.0 的摸鱼阅读 / IDE 状态栏 / 宿主 KV 存储不变。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
