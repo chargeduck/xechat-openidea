@@ -31,6 +31,8 @@ use std::sync::Mutex;
 
 /// 网页视图的 id，与 plugin.toml 中 `[[contributes.views]] id` 一致
 const VIEW: &str = "chat";
+/// IDE 状态栏上阅读器那一格的 id
+const READER_STATUS_ID: &str = "xechat-reader";
 /// 每次 drain 最多取多少帧。
 /// **不能超过宿主的 DRAIN_BATCH（=32）**，否则 `drain` 直接返回
 /// `invalid drain limit` —— 表现为收不到任何帧、句柄被丢弃、前端无限重连。
@@ -283,6 +285,46 @@ impl Moyu {
                     }
                     note(LogLevel::Info, &format!("网页请求关闭连接 #{conn}"));
                 }
+                post(json!({ "id": id, "ok": true }));
+            }
+            // 阅读器：把当前行推到 IDE 原生状态栏（openidea ui.set_status_item）
+            "status" => {
+                let text = msg.get("text").and_then(Value::as_str).unwrap_or("").to_string();
+                let tooltip = msg.get("tooltip").and_then(Value::as_str).map(str::to_string);
+                host::set_status_item(
+                    READER_STATUS_ID,
+                    &openidea_plugin::StatusItem {
+                        text,
+                        tooltip,
+                        // 点状态栏直接打开聊天视图
+                        command: Some("open".to_string()),
+                    },
+                );
+                post(json!({ "id": id, "ok": true }));
+            }
+            "status.clear" => {
+                host::remove_status_item(READER_STATUS_ID);
+                post(json!({ "id": id, "ok": true }));
+            }
+            // 阅读器书库：沙箱里没有 IndexedDB / 真正的 localStorage，正文存宿主 KV
+            "kv.set" => {
+                let key = msg.get("key").and_then(Value::as_str).unwrap_or_default();
+                let value = msg.get("value").and_then(Value::as_str).unwrap_or_default();
+                match host::storage::set(key, value) {
+                    Ok(()) => post(json!({ "id": id, "ok": true })),
+                    Err(e) => self.reply_error(&id, &format!("写入存储失败: {e:?}")),
+                }
+            }
+            "kv.get" => {
+                let key = msg.get("key").and_then(Value::as_str).unwrap_or_default();
+                match host::storage::get(key) {
+                    Ok(v) => post(json!({ "id": id, "ok": true, "value": v })),
+                    Err(e) => self.reply_error(&id, &format!("读取存储失败: {e:?}")),
+                }
+            }
+            "kv.del" => {
+                let key = msg.get("key").and_then(Value::as_str).unwrap_or_default();
+                let _ = host::storage::delete(key);
                 post(json!({ "id": id, "ok": true }));
             }
             "log" => self.op_log(&id, &msg),

@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "xechat"
-version = "0.3.4"
+version = "0.4.0"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.3.4 — 系统提示中的 ConsoleTable 文本表格渲染为 Markdown 表格；新增「中继连接」开关（跨塘走 xechat 站点中继，连 64KB 单帧的官方塘也能发大图）；修复发图报「请先登录」（REACT 帧携带服务端分配的 uid）；xechat-download 链接点击交由宿主保存；图片压缩改用 createImageBitmap，规避 webview 的 blob: CSP 限制。"
+change-notes = "0.4.0 — 新增摸鱼阅读：工具页导入 txt / epub，自动切章、按显示宽度分页、进度本地保存（IndexedDB）；底部阅读条显示当前行与进度，Ctrl+↑/↓ 翻行、Shift+↑/↓ 翻页；支持自动阅读（毫秒间隔，默认 1500ms）、空行跳过、书库导出 / 导入。0.3.4 的中继开关修复一并包含。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
@@ -13,7 +13,7 @@ wasm = "dist/plugin.wasm"
 activation = ["on-view:chat", "on-event:websocket-ready"]
 
 [capabilities]
-required = ["events", "net:dld.lesscoding.net", "net:xechat.lesscoding.net"]
+required = ["events", "storage", "net:dld.lesscoding.net", "net:xechat.lesscoding.net"]
 optional = ["net:*.lesscoding.net", "net:ask", "clipboard", "net:127.0.0.1", "net:localhost", "project.read", "project.write"]
 
 [contributes.settings]

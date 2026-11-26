@@ -50,6 +50,27 @@
     })
   }
 
+  // ===== 宿主能力：IDE 状态栏 + 插件级持久存储 =====
+  // 沙箱里既没有 IndexedDB 也没有真正的 localStorage，小说正文只能存到宿主的
+  // 插件级 KV（host::storage），状态栏则走 ui.set_status_item。
+  window.__xechatHost = {
+    status: function (text, tooltip) {
+      return call({ op: 'status', text: String(text || ''), tooltip: tooltip == null ? '' : String(tooltip) })
+    },
+    clearStatus: function () {
+      return call({ op: 'status.clear' })
+    },
+    kvGet: function (key) {
+      return call({ op: 'kv.get', key: String(key) }).then(function (r) { return r && r.value != null ? r.value : null })
+    },
+    kvSet: function (key, value) {
+      return call({ op: 'kv.set', key: String(key), value: String(value) })
+    },
+    kvDel: function (key) {
+      return call({ op: 'kv.del', key: String(key) })
+    }
+  }
+
   // 沙箱里 localStorage 会抛异常；xechat-web 会读写它（satoken、主题、草稿）。
   // 用内存实现顶上，保证页面不崩；刷新后丢失是预期行为。
   try {
