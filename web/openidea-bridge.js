@@ -109,6 +109,16 @@
       blog('warn', 'bridge.error: ' + msg.error)
       return
     }
+    // 二进制帧（图片等）由插件以 base64 下发：解码成文本后走同一条消息通道
+    if (msg.event === 'ws.message.bin') {
+      try {
+        var bytes = b64ToBytes(msg.b64)
+        msg = { event: 'ws.message', conn: msg.conn, data: new TextDecoder('utf-8').decode(bytes) }
+      } catch (e) {
+        blog('warn', 'binary frame decode failed, len=' + (msg.b64 ? msg.b64.length : 0))
+        return
+      }
+    }
     var kind = String(msg.event).replace('ws.', '')
     var set = msg.conn != null ? conns.get(msg.conn) : null
     if (!set || !set[kind]) {

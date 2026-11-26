@@ -99,6 +99,25 @@ fn frame_kind(text: &str) -> Option<&'static str> {
     }
 }
 
+/// 帧内容预览：只取前若干字符并转义，用于判断"帧到底是什么"（JSON / base64 / 二进制）。
+fn preview(text: &str) -> String {
+    let mut out = String::new();
+    for (i, ch) in text.chars().enumerate() {
+        if i >= 120 {
+            out.push('…');
+            break;
+        }
+        match ch {
+            '\n' => out.push_str("\\n"),
+            '\r' => out.push_str("\\r"),
+            '\t' => out.push_str("\\t"),
+            c if (c as u32) < 0x20 => out.push('.'),
+            c => out.push(c),
+        }
+    }
+    out
+}
+
 /// 每帧都追加会刷屏，只对前几帧和每第 N 帧留记录
 fn note_frame(conn: u64, text: &str) {
     let n = {
@@ -107,9 +126,14 @@ fn note_frame(conn: u64, text: &str) {
         *c += 1;
         *c
     };
-    if n <= 3 || n % 25 == 0 {
-        let kind = frame_kind(text).unwrap_or("BINARY?");
-        note(LogLevel::Info, &format!("recv#{conn} 第{n}帧 {kind} {} 字节", text.len()));
+    // 采样：前 3 帧 + 每 25 帧 + 图片/上传帧（后两类必须全量，排查用）
+    if n <= 3 || n % 25 == 0 || text.contains("IMAGE") || text.contains("UPLOAD") {
+        let kind = frame_kind(text).unwrap_or("RAW");
+        // 带上预览：图片消息/大帧在排查时要看到 type 字段与开头形态
+        note(
+            LogLevel::Info,
+            &format!("recv#{conn} 第{n}帧 {kind} {} 字节 | {}", text.len(), preview(text)),
+        );
     }
 }
 
@@ -183,11 +207,26 @@ fn pump(conn: u64) {
             };
             match ws.drain(DRAIN_LIMIT) {
                 Ok(batch) => {
-                    let texts: Vec<String> = batch
-                        .messages
-                        .iter()
-                        .map(|b| String::from_utf8_lossy(b).into_owned())
-                        .collect();
+                    // 文本帧原样转发；非 UTF-8 的二进制帧不能 from_utf8_lossy（会变成乱码 JSON 被前端丢弃），
+                    // 改成 base64 交给前端自己解码——图片大帧就是走这条路。
+                    let mut texts: Vec<(String, bool)> = Vec::with_capacity(batch.messages.len());
+                    for b in batch.messages.iter() {
+                        match std::str::from_utf8(b) {
+                            Ok(t) => texts.push((t.to_string(), false)),
+                            Err(_) => {
+                                let head: Vec<String> = b.iter().take(12).map(|x| format!("{x:02x}")).collect();
+                                note(
+                                    LogLevel::Warn,
+                                    &format!(
+                                        "recv#{conn} 二进制帧 {} 字节（非 UTF-8），转 base64 下发。head={}",
+                                        b.len(),
+                                        head.join(" ")
+                                    ),
+                                );
+                                texts.push((B64.encode(b), true));
+                            }
+                        }
+                    }
                     Ok((texts, batch.closed))
                 }
                 Err(e) => Err(e.to_string()),
@@ -204,9 +243,13 @@ fn pump(conn: u64) {
         };
 
         let full = texts.len() as u32 >= DRAIN_LIMIT;
-        for text in texts {
-            note_frame(conn, &text);
-            post(json!({ "event": "ws.message", "conn": conn, "data": text }));
+        for (text, is_bin) in texts {
+            if is_bin {
+                post(json!({ "event": "ws.message.bin", "conn": conn, "b64": text }));
+            } else {
+                note_frame(conn, &text);
+                post(json!({ "event": "ws.message", "conn": conn, "data": text }));
+            }
         }
 
         if closed {
@@ -225,6 +268,12 @@ fn pump(conn: u64) {
 
 /// 发帧同理：前 5 帧和每第 10 帧留记录（LOGIN 就在前几帧里），同样只记元信息
 fn note_send(conn: u64, data: &str) {
+    if data.contains("UPLOAD") || data.contains("IMAGE") {
+        note(
+            LogLevel::Info,
+            &format!("send#{conn} {} 字节 | {}", data.len(), preview(data)),
+        );
+    }
     let n = {
         let mut counts = SENDS.lock().unwrap_or_else(|e| e.into_inner());
         let c = counts.get_or_insert_with(HashMap::new).entry(conn).or_insert(0);
