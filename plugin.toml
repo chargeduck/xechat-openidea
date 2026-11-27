@@ -1,11 +1,11 @@
 id = "xechat.openidea"
 name = "xechat"
-version = "0.4.2"
+version = "0.4.3"
 description = "Moyu chat: join an xechat pond from the IDE — read and send messages, see who is online, open the game hall."
 authors = ["xechat"]
 homepage = "https://dld.lesscoding.net"
 license = "Apache-2.0"
-change-notes = "0.4.2 — 修 openIDEA 下图片收发：二进制帧不再按文本强转（改 base64 透传 + 桥接解码）、消息内联展示、宿主存储写入失败时读/删统一回退内存（审核 P3）、设置项（管理员 token / 快捷键等）改存宿主 KV 以免重开失效；面板内底部阅读条在 openIDEA 下不再渲染。"
+change-notes = "0.4.3 — 图片消息可正常收发（二进制帧 base64 透传 + 分片解码）、中继连接按目标塘地址拼下载 URL、消息字号限制 10~36px、设置项（管理员 token/快捷键）存宿主 KV 不再丢、面板底部阅读条在 openIDEA 下不渲染。"
 categories = ["tools"]
 icon = "icons/xechat.svg"
 engines.openidea = "^1.6"
