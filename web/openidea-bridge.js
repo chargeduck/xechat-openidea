@@ -60,6 +60,11 @@
     clearStatus: function () {
       return call({ op: 'status.clear' })
     },
+    // 页面日志落盘：webview 没有控制台，排查问题时统一写进插件日志
+    log: function (level, msg) {
+      blog(level || 'info', msg)
+      return Promise.resolve(true)
+    },
     kvGet: function (key) {
       return call({ op: 'kv.get', key: String(key) }).then(function (r) { return r && r.value != null ? r.value : null })
     },
