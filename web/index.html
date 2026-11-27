@@ -76045,7 +76045,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
       })) return;
       _recentImageKeys.push({ key, t: now2 });
     }
-    if (!extra && _isLocalEcho(data, displayText)) return;
+    if (!extra && _isLocalEcho(data, text2)) return;
     if (_chatStoreBridge) {
       _chatStoreBridge.addMessage(displayText, displayType, extra);
     }
@@ -76250,7 +76250,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
     const body = String(text2 || "");
     if (!body) return;
     const head = _selfHead();
-    const key = head + body;
+    const key = body;
     const now2 = Date.now();
     _recentTextKeys = _recentTextKeys.filter(function(k) {
       return now2 - k.t < 8e3;
@@ -76262,7 +76262,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
       state.messages.push({ text: head + body, time: (/* @__PURE__ */ new Date()).toLocaleTimeString(), type: void 0 });
     }
   }
-  function _isLocalEcho(data, displayText) {
+  function _isLocalEcho(data, rawText) {
     if (!_recentTextKeys.length) return false;
     const me2 = state.username || "";
     const uname = data.user && data.user.username || "";
@@ -76272,7 +76272,7 @@ usage: app.provide(ZINDEX_INJECTION_KEY, { current: 0 })`);
       return now2 - k.t < 8e3;
     });
     const idx = _recentTextKeys.findIndex(function(k) {
-      return k.key === displayText;
+      return k.key === rawText;
     });
     if (idx < 0) return false;
     _recentTextKeys.splice(idx, 1);
